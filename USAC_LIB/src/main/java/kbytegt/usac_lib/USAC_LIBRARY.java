@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usac_library;
+package kbytegt.usac_lib;
+
+import com.google.gson.Gson;
+
 
 /**
  *
@@ -16,6 +19,7 @@ public class USAC_LIBRARY {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Gson json = new Gson();
     }
     
 }
