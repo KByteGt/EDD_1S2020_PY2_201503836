@@ -7,7 +7,7 @@ package kbytegt.usac_lib;
 
 /**
  *
- * @author JOSED
+ * @author KByteGt
  */
 public class UIlibrary extends javax.swing.JFrame {
 

@@ -7,7 +7,7 @@ package kbytegt.usac_lib;
 
 /**
  *
- * @author JOSED
+ * @author KByteGt
  */
 public class UIlogin extends javax.swing.JFrame {
 
@@ -39,6 +39,7 @@ public class UIlogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btn_json_usuario = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -71,7 +72,13 @@ public class UIlogin extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("USAC - Library");
 
+        btn_ingresar.setBackground(new java.awt.Color(0, 102, 255));
+        btn_ingresar.setFont(btn_ingresar.getFont().deriveFont(btn_ingresar.getFont().getSize()+1f));
         btn_ingresar.setText("Ingresar");
+        btn_ingresar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn_ingresar.setMaximumSize(new java.awt.Dimension(115, 35));
+        btn_ingresar.setMinimumSize(new java.awt.Dimension(115, 35));
+        btn_ingresar.setPreferredSize(new java.awt.Dimension(115, 35));
         btn_ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ingresarActionPerformed(evt);
@@ -98,6 +105,15 @@ public class UIlogin extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setFont(jButton1.getFont().deriveFont(jButton1.getFont().getSize()+1f));
+        jButton1.setText("Registrar");
+        jButton1.setToolTipText("");
+        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton1.setMaximumSize(new java.awt.Dimension(115, 35));
+        jButton1.setMinimumSize(new java.awt.Dimension(115, 35));
+        jButton1.setPreferredSize(new java.awt.Dimension(115, 35));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -110,15 +126,18 @@ public class UIlogin extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField1)
                     .addComponent(jPasswordField1)
-                    .addComponent(btn_ingresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_json_usuario))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_json_usuario)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_ingresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -139,9 +158,12 @@ public class UIlogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_json_usuario))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_json_usuario)
+                .addGap(52, 52, 52))
         );
 
         btn_ingresar.getAccessibleContext().setAccessibleName("btn_ingresar");
@@ -166,25 +188,24 @@ public class UIlogin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_json_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_json_usuarioMouseClicked
+        // TODO add your handling code here:
+        //Cargar JSON Con usuarios existentes
+
+    }//GEN-LAST:event_btn_json_usuarioMouseClicked
+
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         // TODO add your handling code here:
         //Validar campos e ingresar al menu principal
     }//GEN-LAST:event_btn_ingresarActionPerformed
-
-    private void btn_json_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_json_usuarioMouseClicked
-        // TODO add your handling code here:
-        //Cargar JSON Con usuarios existentes
-        
-        
-    }//GEN-LAST:event_btn_json_usuarioMouseClicked
 
     /**
      * @param args the command line arguments
@@ -224,6 +245,7 @@ public class UIlogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_ingresar;
     private javax.swing.JLabel btn_json_usuario;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

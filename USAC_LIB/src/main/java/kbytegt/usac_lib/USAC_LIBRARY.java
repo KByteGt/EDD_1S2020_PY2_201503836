@@ -10,9 +10,24 @@ import com.google.gson.Gson;
 
 /**
  *
- * @author JOSED
+ * @author KByteGt
  */
 public class USAC_LIBRARY {
+    
+    //Constantes
+    static final int REQUEST_OK = 200;
+    static final int REQUEST_CREATED = 201;
+    static final int REQUEST_ACEPTED = 202;
+    static final int REQUEST_UPDATED = 203;
+    static final int REQUEST_DELETED = 204;
+    static final int REQUEST_NO_CONTENT = 204;
+    static final int REQUEST_ERROR = 400;
+    static final int REQUEST_UNAUTHORIZED = 401;
+    static final int REQUEST_NOT_FOUND = 404;
+    static final int REQUEST_TIMEOUT = 408;
+    static final int REQUEST_SERVER_ERROR = 500;
+    static final int REQUEST_AUTHENTICATION_REQUIRED = 511;
+    
 
     /**
      * @param args the command line arguments
