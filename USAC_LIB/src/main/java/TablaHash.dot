@@ -1,0 +1,62 @@
+digraph TablaHash {
+
+    node [shape=box]
+    label = ".:: Usuarios registrados ::.";
+
+    /* add group 1 for vertical alignment */
+    TH[ label = "TABLA HASH", width = 1.5, style = filled, group = 0 ];
+
+    N0  [label = "0"  width = 1.5 style = filled, group = 1 ];
+    U201503836 [label = "[201503836] Jose Lopez \ne10adc3949ba59abbe56e057f20f883e" width = 1, group = 1 ];
+    { rank = same; N0; U201503836;}
+        
+        
+    N1  [label = "1"   width = 1.5 style = filled, group = 0 ];
+    N85 [label = "[201500001] \ne10adc3949ba59abbe56e057f20f883e" width = 1, group = 1 ];
+    N95 [label = "[201500005] \ne10adc3949ba59abbe56e057f20f883e" width = 1, group = 2 ];
+    { rank = same; N1; N85; N95;}
+    
+    N2  [label = "2"   width = 1.5 style = filled, group = 0 ];
+    { rank = same; N2;}
+     
+    N3  [label = "3"   width = 1.5 style = filled, group = 0 ];
+    N106 [label = "[201500003] \ne10adc3949ba59abbe56e057f20f883e" width = 1, group = 10 ];
+    { rank = same; N3; N106;}
+    
+    N4  [label = "4"   width = 1.5 style = filled, group = 0 ];
+    { rank = same; N4;}
+    
+    N5  [label = "5"   width = 1.5 style = filled, group = 0 ];
+    N107 [label = "[201500004] \n040b7cf4a55014e185813e0644502ea9" width = 1, group = 10 ];
+    { rank = same; N5; N107;}
+    
+    N6 [label = "6"  width = 1.5 style = filled, group = 0 ];
+    N2020 [label = "[201500002] \n040b7cf4a55014e185813e0644502ea9" width = 1, group = 20 ];
+    { rank = same; N6; N2020;}
+    
+    N7  [label = "7"   width = 1.5 style = filled, group = 0 ];
+    { rank = same; N7;}
+    
+    
+    TH -> N0;
+   
+    N0 -> U201503836;
+    N0 -> N1 -> N85;
+    N85 -> N95;
+    
+    N1 -> N2;
+    
+    N2 -> N3;
+    N3 -> N106;
+    N3 -> N4;
+
+    N4 -> N5;
+    
+    N5 -> N107;
+    N5 -> N6;
+
+    N6 -> N2020;
+    N6 -> N7;
+
+    
+}

@@ -5,9 +5,7 @@
  */
 package kbytegt.usac_lib;
 
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_CREATED;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_DELETED;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NOT_FOUND;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NO_CONTENT;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_UPDATED;
@@ -67,6 +65,11 @@ public class ListaUsuarios {
         }
     }
     
+    /**
+     *
+     * @param int carnet
+     * @return NodoUsuario, null
+     */
     public NodoUsuario buscar(int carnet){
         if(this.inicio != null){
             NodoUsuario temp;
@@ -86,6 +89,11 @@ public class ListaUsuarios {
         }
     }
     
+    /**
+     *
+     * @param int carnet
+     * @return REQUEST_DELETED, REQUEST_NO_CONTENT
+     */
     public int eliminar(int carnet){
         if(this.inicio != null){
             NodoUsuario temp, anterior;
@@ -115,4 +123,44 @@ public class ListaUsuarios {
         }
     }
     
+    String getGraphvizNodo(){
+        String g = "";
+        if(this.inicio != null){
+            int i = 1;
+            NodoUsuario temp = this.inicio;
+            while(temp.getSiguiente() != null){
+                g += temp.getGraphvizNodo(i);
+                temp = temp.getSiguiente();
+                i++;
+            }
+            g += temp.getGraphvizNodo(i);            
+        }
+        return g;
+    }
+    
+    String getGraphvizRuta(){
+        String g = "";
+        if(this.inicio != null){
+            NodoUsuario temp = this.inicio;
+            while(temp.getSiguiente() != null){
+                g += temp.getGraphvizRuta();
+                temp = temp.getSiguiente();
+            }
+            g += temp.getGraphvizRuta()+";\n";
+        }        
+        return g;
+    }
+    
+    String getGraphvizRank(){
+        String g = "";
+        if(this.inicio != null){
+            NodoUsuario temp = this.inicio;
+            while(temp.getSiguiente() != null){
+                g += "U"+temp.getCarnet()+"; ";
+                temp = temp.getSiguiente();
+            }
+            g += "U"+temp.getCarnet()+"; ";
+        }
+        return g;
+    }
 }

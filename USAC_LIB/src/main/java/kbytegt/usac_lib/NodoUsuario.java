@@ -87,4 +87,16 @@ public class NodoUsuario {
         String json = "\"Carnet\": " + this.carnet + ", \"Nombre\": " + this.nombre + ", \"Apellido\": " + this.apellido + ", \"Carrera\": " + this.carrera + ", \"Password\": " + this.password;
         return "{" + json + "}";
     }
+    
+    String getGraphvizNodo(int id){
+        
+        String g = "U"+this.carnet +" [label = \"["+this.carnet+"] "+this.nombre+" "+this.apellido+"\n"+this.password+"\" width = 1, group = "+id+" ];\n";
+        return g;
+    }
+    
+    String getGraphvizRuta(){
+        String g = "";
+        g = " -> U"+this.carnet;
+        return g;
+    }
 }
