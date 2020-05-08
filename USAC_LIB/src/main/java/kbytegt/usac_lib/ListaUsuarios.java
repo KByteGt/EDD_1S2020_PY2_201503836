@@ -6,7 +6,7 @@
 package kbytegt.usac_lib;
 
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_DELETED;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NO_CONTENT;
+import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NOT_FOUND;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_UPDATED;
 
@@ -95,31 +95,37 @@ public class ListaUsuarios {
      * @return REQUEST_DELETED, REQUEST_NO_CONTENT
      */
     public int eliminar(int carnet){
+        System.out.println(" [eliminar tabla hash] buscando carnet: " + carnet);
         if(this.inicio != null){
-            NodoUsuario temp, anterior;
-            temp = this.inicio;
-            anterior = this.inicio;
-
-            while(temp.getSiguiente() != null && temp.getCarnet() != carnet){
-                temp.getSiguiente();
-                anterior = temp;
-            }
-
-            if(temp.getCarnet() == carnet){
-                //ELIMINAR USUARIO
-                if(temp == this.inicio){
-                    //EL DATO A ELIMINAR ES INICIO
-                    this.inicio = temp.getSiguiente();
+             NodoUsuario temp, aux;
+            if (this.inicio.getCarnet() == carnet) {
+                //Eliminar Inicio
+                if(this.inicio.getSiguiente()!= null){
+                    temp = this.inicio.getSiguiente();
+                    this.inicio = temp;
                 } else {
-                    //ELIMINAR DATO
-                    anterior.setSiguiente(temp.getSiguiente());
+                    this.inicio = null;
                 }
                 return REQUEST_DELETED;
             } else {
-                return REQUEST_NO_CONTENT;
+                // No es Inicio
+                temp = this.inicio;
+                while(temp.getSiguiente() != null && temp.getSiguiente().getCarnet() != carnet){
+                    System.out.println(" > Buscando"+carnet+": "+temp.getSiguiente().getCarnet());
+                    temp.getSiguiente();
+                }
+                
+                if (temp.getSiguiente().getCarnet() == carnet) {
+                    //Eliminar nodo
+                    aux = temp.getSiguiente().getSiguiente();
+                    temp.setSiguiente(aux);
+                    return REQUEST_DELETED;
+                } else{
+                    return REQUEST_NOT_FOUND;
+                }
             }
         } else {
-            return REQUEST_NO_CONTENT;
+            return REQUEST_NOT_FOUND;
         }
     }
     

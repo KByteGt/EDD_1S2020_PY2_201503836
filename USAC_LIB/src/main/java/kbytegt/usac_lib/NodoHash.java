@@ -5,6 +5,8 @@
  */
 package kbytegt.usac_lib;
 
+import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NOT_FOUND;
+
 /**
  *
  * @author KByteGt
@@ -54,16 +56,26 @@ public class NodoHash {
      * @return NodoUsuario, null
      */
     public NodoUsuario buscar(int carnet){
-        return this.lista.buscar(carnet);
+        if(this.lista.getInicio() != null){
+            return this.lista.buscar(carnet);
+        } else{
+            return null;
+        }
+            
     }
     
     /**
      *
      * @param int carnet
-     * @return REQUEST_DELETED, REQUEST_NO_CONTENT
+     * @return REQUEST_DELETED, REQUEST_NO_CONTENT, REQUEST_NOT_FOUND
      */
     public int eliminar(int carnet){
-        return this.lista.eliminar(carnet);
+        if(this.lista.getInicio() != null){
+            return this.lista.eliminar(carnet);
+        } else{
+            return REQUEST_NOT_FOUND;
+        }
+        
     }
     
     String getGraphvizNodo(){

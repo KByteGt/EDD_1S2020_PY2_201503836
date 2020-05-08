@@ -6,6 +6,7 @@
 package kbytegt.usac_lib;
 
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_ERROR;
+import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NOT_FOUND;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
 
 /**
@@ -75,20 +76,30 @@ public class TablaHash {
      * @return NodoUsuario, null
      */
     public NodoUsuario buscar(int carnet){
-        int i = funcion(carnet);
-        NodoUsuario request = tabla[i].buscar(carnet);
-        return request;
+        try {
+            int i = funcion(carnet);
+            NodoUsuario request = tabla[i].buscar(carnet);
+            return request;
+        } catch (Exception e) {
+            return null;
+        }
+       
     }
     
     /**
      *
      * @param int carnet
-     * @return REQUEST_DELETED, REQUEST_NO_CONTENT
+     * @return REQUEST_DELETED, REQUEST_NO_CONTENT, REQUEST_NOT_FOUND, REQUEST_ERROR
      */
     public int eliminar(int carnet){
-        int i = funcion(carnet);
-        int request = tabla[i].eliminar(carnet);
-        return request;
+        try {
+            int i = funcion(carnet);
+            int request = tabla[i].eliminar(carnet);
+            return request;
+        } catch (Exception e) {
+            return REQUEST_ERROR;
+        }
+        
     }
     
     String getGraphviz(String nombre){
