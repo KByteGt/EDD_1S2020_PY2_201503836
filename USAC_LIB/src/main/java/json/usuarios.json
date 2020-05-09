@@ -20,6 +20,13 @@
 			"Apellido": "Hernandez",
 			"Carrera": "Ingenieria Electrica",
 			"Password": "123456"
-		}
+		},
+		{
+			"Carnet": 201503836,
+			"Nombre": "Jose",
+			"Apellido": "Lopez",
+			"Carrera": "Ingenieria en Sistemas",
+			"Password": "abf3b847"
+		}		
 	]
 }

@@ -6,7 +6,6 @@
 package kbytegt.usac_lib;
 
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_ERROR;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NOT_FOUND;
 import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
 
 /**

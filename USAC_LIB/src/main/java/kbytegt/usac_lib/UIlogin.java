@@ -5,12 +5,19 @@
  */
 package kbytegt.usac_lib;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 /**
  *
- * @author KByteGt
+ * @author JOSED
  */
 public class UIlogin extends javax.swing.JFrame {
-
+    
+    Security security;
     /**
      * Creates new form UIlogin
      */
@@ -27,185 +34,175 @@ public class UIlogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jFileChooser1 = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jSeparator1 = new javax.swing.JSeparator();
-        btn_ingresar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        btn_json_usuario = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/img-2.png"))); // NOI18N
-        jLabel5.setMaximumSize(new java.awt.Dimension(300, 150));
-        jLabel5.setMinimumSize(new java.awt.Dimension(300, 150));
-        jLabel5.setPreferredSize(new java.awt.Dimension(300, 150));
+        btn_entrar = new javax.swing.JButton();
+        btn_registrarse = new javax.swing.JButton();
+        btn_cargar = new javax.swing.JButton();
+        password = new javax.swing.JPasswordField();
+        usuario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("LogIn - USAC library");
-        setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        setLocation(new java.awt.Point(200, 150));
-        setLocationByPlatform(true);
-        setName("ui_frame"); // NOI18N
+        setTitle("LogIn");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMaximumSize(new java.awt.Dimension(300, 500));
+        setMinimumSize(new java.awt.Dimension(300, 500));
+        setName("f_login"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(300, 500));
         setResizable(false);
-        setSize(new java.awt.Dimension(300, 500));
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto Light", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("USAC - Library");
+        jLabel1.setText("USAC - LIBRARY");
 
-        btn_ingresar.setBackground(new java.awt.Color(0, 102, 255));
-        btn_ingresar.setFont(btn_ingresar.getFont().deriveFont(btn_ingresar.getFont().getSize()+1f));
-        btn_ingresar.setText("Ingresar");
-        btn_ingresar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btn_ingresar.setMaximumSize(new java.awt.Dimension(115, 35));
-        btn_ingresar.setMinimumSize(new java.awt.Dimension(115, 35));
-        btn_ingresar.setPreferredSize(new java.awt.Dimension(115, 35));
-        btn_ingresar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel2.setText("Usuario: (carnet)");
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel3.setText("Contraseña:");
+
+        btn_entrar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        btn_entrar.setText("Entrar");
+        btn_entrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ingresarActionPerformed(evt);
+                btn_entrarActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 3)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
-        jLabel2.setMaximumSize(new java.awt.Dimension(125, 125));
-        jLabel2.setMinimumSize(new java.awt.Dimension(125, 125));
-        jLabel2.setPreferredSize(new java.awt.Dimension(125, 125));
-
-        jLabel3.setText("Usuario (carnet):");
-
-        jLabel4.setText("Contraseña:");
-
-        btn_json_usuario.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        btn_json_usuario.setText("Cargar JSON usuarios");
-        btn_json_usuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btn_json_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_json_usuarioMouseClicked(evt);
+        btn_registrarse.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        btn_registrarse.setText("Registrarse");
+        btn_registrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarseActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setFont(jButton1.getFont().deriveFont(jButton1.getFont().getSize()+1f));
-        jButton1.setText("Registrar");
-        jButton1.setToolTipText("");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setMaximumSize(new java.awt.Dimension(115, 35));
-        jButton1.setMinimumSize(new java.awt.Dimension(115, 35));
-        jButton1.setPreferredSize(new java.awt.Dimension(115, 35));
+        btn_cargar.setBackground(new java.awt.Color(255, 255, 255));
+        btn_cargar.setFont(new java.awt.Font("Roboto Light", 0, 10)); // NOI18N
+        btn_cargar.setText("Cargar archivo JSON");
+        btn_cargar.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
+        btn_cargar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        btn_cargar.setDefaultCapable(false);
+        btn_cargar.setFocusPainted(false);
+        btn_cargar.setFocusable(false);
+        btn_cargar.setRequestFocusEnabled(false);
+        btn_cargar.setRolloverEnabled(false);
+        btn_cargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cargarActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1)
-                    .addComponent(jPasswordField1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_json_usuario))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_ingresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_json_usuario)
-                .addGap(52, 52, 52))
-        );
+        password.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        password.setToolTipText("");
 
-        btn_ingresar.getAccessibleContext().setAccessibleName("btn_ingresar");
-        btn_json_usuario.getAccessibleContext().setAccessibleName("btn_json_usuarios");
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/img-2.png"))); // NOI18N
-        jLabel6.setMaximumSize(new java.awt.Dimension(300, 125));
-        jLabel6.setMinimumSize(new java.awt.Dimension(300, 125));
-        jLabel6.setPreferredSize(new java.awt.Dimension(300, 125));
+        usuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btn_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_registrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(password)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(usuario, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_cargar)))
                 .addContainerGap())
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addComponent(jLabel1)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_entrar)
+                    .addComponent(btn_registrarse))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_cargar)
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_json_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_json_usuarioMouseClicked
-        // TODO add your handling code here:
-        //Cargar JSON Con usuarios existentes
+    private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
+        // BOTON DE INGRESO
+        
+        //Obtener usuario y contraseña
+        String user, pass = "";
+        char[] tempPass;
+        int carnet;
+        user = usuario.getText();
+        tempPass = password.getPassword();
+        for (int i = 0; i < tempPass.length ; i++) {
+            pass+=tempPass[i];
+        }
+        System.out.println(user + "\n" + pass);
+        try {
+            carnet = Integer.parseInt(user);
+            NodoUsuario temp = USAC_LIBRARY.usuarios.buscar(carnet);
+            if(temp != null){
+                if(temp.getPassword().equals(security.getMD5(pass))){
+                    //Enviar al usuario al menú principal
+                    JOptionPane.showMessageDialog(null, "Ingreso exitoso","LogIn",JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas","LogIn",JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas","LogIn",JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println("Usuario invalido");
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas","LogIn",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        
+    }//GEN-LAST:event_btn_entrarActionPerformed
 
-    }//GEN-LAST:event_btn_json_usuarioMouseClicked
-
-    private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
+    private void btn_registrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarseActionPerformed
         // TODO add your handling code here:
-        //Validar campos e ingresar al menu principal
-    }//GEN-LAST:event_btn_ingresarActionPerformed
+    }//GEN-LAST:event_btn_registrarseActionPerformed
+
+    private void btn_cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargarActionPerformed
+        // LEER ARCHIVO JSON EN RUTA
+        Archivo a = new Archivo();
+        String txt;
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JavaScript Object Notation", "json");
+        jFileChooser1.setFileFilter(filter);
+        int returnVal = jFileChooser1.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println(jFileChooser1.getSelectedFile().getAbsolutePath());
+            txt = a.getJson(jFileChooser1.getSelectedFile().getAbsolutePath());
+           
+            USAC_LIBRARY.ingresarUsuarios(txt);
+            //System.out.println(txt);
+        }
+        
+    }//GEN-LAST:event_btn_cargarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,19 +240,14 @@ public class UIlogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_ingresar;
-    private javax.swing.JLabel btn_json_usuario;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_cargar;
+    private javax.swing.JButton btn_entrar;
+    private javax.swing.JButton btn_registrarse;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }

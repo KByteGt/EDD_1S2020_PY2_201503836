@@ -6,6 +6,10 @@
 package kbytegt.usac_lib;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
 
@@ -31,23 +35,57 @@ public class USAC_LIBRARY {
     static final int REQUEST_AUTHENTICATION_REQUIRED = 511;
     
     /////////////////////////////////////////////////////////
-    
+    static Gson json;
     static Security security;
     static TablaHash usuarios;
-    
+    static UIlogin login = new UIlogin();
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws NoSuchAlgorithmException {
         // TODO code application logic here
-        Gson json = new Gson();
+        json = new Gson();
         usuarios = new TablaHash(19);
-
-        test();
+        
+        //test();
+        
+        //Cargar el LogIn
+        try {
+            login.setVisible(true);
+        } catch (Exception e) {
+            System.out.println("Error al abrir la ventana UIlogin");
+        }
+        
+        
 
     }    
     
+    public static void ingresarUsuarios(String txt){
+        try {
+            JsonParser parser = new JsonParser();
+            JsonObject json_usuarios = parser.parse(txt).getAsJsonObject();
+
+            JsonArray user_array = json_usuarios.getAsJsonArray("Usuarios").getAsJsonArray();
+            for(JsonElement user : user_array){
+                JsonObject user_obj = user.getAsJsonObject();
+                int carnet = user_obj.get("Carnet").getAsInt();
+                String nombre = user_obj.get("Nombre").getAsString();
+                String apellido = user_obj.get("Apellido").getAsString();
+                String carrera = user_obj.get("Carrera").getAsString();
+                String password = user_obj.get("Password").getAsString();
+
+                NodoUsuario usuario = new NodoUsuario(carnet,nombre,apellido,carrera,security.getMD5(password));
+                usuarios.insertar(usuario);
+                
+                System.out.println("["+carnet+"] "+nombre+" "+apellido+" - "+carrera+" > "+password);
+            }  
+        } catch (Exception e) {
+            System.out.println("Error al leer JSON");
+        }
+                
+    }
+            
     public static String getMessage(int request, String txt){
         String r = "";
         switch(request){
@@ -135,7 +173,7 @@ public class USAC_LIBRARY {
         }
         
         int request = usuarios.eliminar(109803834);
-        getMessage(request,"Usuario "+ 109803834);
+        //getMessage(request,"Usuario "+ 109803834);
 
         
         temp = usuarios.buscar(109803834);
