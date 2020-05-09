@@ -7,6 +7,7 @@ package kbytegt.usac_lib;
 
 import com.google.gson.Gson;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,10 +48,49 @@ public class USAC_LIBRARY {
 
     }    
     
-    public String getMessage(int request){
+    public static String getMessage(int request, String txt){
         String r = "";
         switch(request){
-            
+            case REQUEST_OK:
+                JOptionPane.showMessageDialog(null, "Operación realizada con éxito:\n"+txt);
+                break;
+            case REQUEST_CREATED:
+                JOptionPane.showMessageDialog(null, "Operación creada con éxito:\n"+txt);
+                break;
+            case REQUEST_ACEPTED:
+                JOptionPane.showMessageDialog(null, "Operación aceptada con éxito:\n"+txt);
+                break;
+            case REQUEST_UPDATED:
+                JOptionPane.showMessageDialog(null, "Operación actualizada con éxito:\n"+txt);
+                break;
+            case REQUEST_DELETED:
+                JOptionPane.showMessageDialog(null, "Operación eliminada con éxito:\n"+txt);
+                break;
+            case REQUEST_NO_CONTENT:
+                JOptionPane.showMessageDialog(null, "No se pudo realizar la operación:\n"+txt);
+                break;
+                
+            case REQUEST_ERROR:
+                JOptionPane.showMessageDialog(null, "Error al efecutar:\n"+txt);
+                break;
+            case REQUEST_UNAUTHORIZED:
+                JOptionPane.showMessageDialog(null, "Se necesita autorización para:\n"+txt);
+                break;
+            case REQUEST_NOT_FOUND:
+                JOptionPane.showMessageDialog(null, "No se puedo realizar la operación:\n"+txt);
+                break;
+            case REQUEST_TIMEOUT:
+                JOptionPane.showMessageDialog(null, "Tiempo de espera agotado:\n"+txt);
+                break;
+                
+            case REQUEST_SERVER_ERROR:
+                JOptionPane.showMessageDialog(null, "Error interno del servidor:\n"+txt);
+                break;
+            case REQUEST_AUTHENTICATION_REQUIRED:
+                JOptionPane.showMessageDialog(null, "Se necesitan permisos para realizar la operación:\n"+txt);
+                break;
+            default:
+                break;
         }
         return r;
     }
@@ -80,6 +120,7 @@ public class USAC_LIBRARY {
         if(temp != null){
             System.out.println(temp.getJSON());
         } else {
+            
             System.out.println("No existe el usuario:");
         }
         
@@ -94,17 +135,8 @@ public class USAC_LIBRARY {
         }
         
         int request = usuarios.eliminar(109803834);
-        switch(request){
-            case REQUEST_DELETED:
-                System.out.println("Usuario: 109803834 eliminado exitosamente.");
-                break;
-            case REQUEST_NOT_FOUND:
-                System.out.println("Usuario: 109803834 no encontrado.");
-                break;
-            default:
-                System.out.println("Error al eliminar");
-                break;
-        }
+        getMessage(request,"Usuario "+ 109803834);
+
         
         temp = usuarios.buscar(109803834);
         if(temp != null){
