@@ -11,7 +11,7 @@ package kbytegt.usac_lib;
  * @author KByteGt
  */
 public class NodoUsuario {
-    private int carnet;
+    private final int carnet; //No se puede cambiar el ID
     private String nombre;
     private String apellido;
     private String carrera;
@@ -39,9 +39,9 @@ public class NodoUsuario {
         return carnet;
     }
 
-    public void setCarnet(int carnet) {
-        this.carnet = carnet;
-    }
+//    public void setCarnet(int carnet) {
+//        this.carnet = carnet;
+//    }
 
     public String getNombre() {
         return nombre;

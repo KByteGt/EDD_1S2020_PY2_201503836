@@ -13,7 +13,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author JOSED
+ * @author KByteGt
  */
 public class UIlogin extends javax.swing.JFrame {
     

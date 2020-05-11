@@ -6,6 +6,7 @@
 package kbytegt.usac_lib;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -45,18 +46,20 @@ public class USAC_LIBRARY {
      */
     public static void main(String[] args) throws NoSuchAlgorithmException {
         // TODO code application logic here
-        json = new Gson();
-        usuarios = new TablaHash(19);
+        //json = new GsonBuilder().serializeNulls().create();
+        usuarios = new TablaHash(45);
         
-        //test();
+        System.out.println("Preparando pruebas");
+        test();
         
         //Cargar el LogIn
         try {
+            System.out.println("Abriendo ventana LogIn");
             login.setVisible(true);
         } catch (Exception e) {
             System.out.println("Error al abrir la ventana UIlogin");
         }
-        
+//        
         
 
     }    
@@ -134,12 +137,17 @@ public class USAC_LIBRARY {
     }
     
     public static void test(){
+//        Gson gson = new GsonBuilder().serializeNulls().create();
+//        String json = gson.toJson(new NodoUsuario(0,"","","",""));
+//        System.out.println(json);
+        
+            
         NodoUsuario u1 = new NodoUsuario(201503836,"Daniel","Lopez","Ciencias y Sistemas",security.getMD5("123456"));
         NodoUsuario u2 = new NodoUsuario(201503476,"Ricardo","Cutz","Ingenieria en istemas",security.getMD5("12b456"));
         NodoUsuario u3 = new NodoUsuario(201503477,"Juanito","Hernandez","Ingenieria Civil",security.getMD5("abf34543"));
         NodoUsuario u4 = new NodoUsuario(202005878,"Antonio","Hernandez","Ingenieria Electrica",security.getMD5("asdfghjkl"));
         NodoUsuario u5 = new NodoUsuario(201003866,"Pedrito","Lopez","Ciencias y Sistemas",security.getMD5("eewe3434"));
-        NodoUsuario u6 = new NodoUsuario(201103336,"Miguel","Lopez","Ciencias y Sistemas",security.getMD5("password"));
+        NodoUsuario u6 = new NodoUsuario(201103336,"Miguel","Lopez","Ciencias y Sistemas",security.getMD5("1234"));
         NodoUsuario u7 = new NodoUsuario(109803834,"Juan","Lopez","Ciencias y Sistemas",security.getMD5("juan123"));
         NodoUsuario u8 = new NodoUsuario(201504876,"Juan","Lemus","Ciencias y Sistemas",security.getMD5("1sss3356"));
         
@@ -153,38 +161,46 @@ public class USAC_LIBRARY {
         usuarios.insertar(u8);
         
         
-        NodoUsuario temp;
-        temp = usuarios.buscar(201503836);
-        if(temp != null){
-            System.out.println(temp.getJSON());
-        } else {
-            
-            System.out.println("No existe el usuario:");
-        }
-        
-        NodoUsuario u9 = new NodoUsuario(201503836,"Daniel","Lopez","Ciencias y Sistemas",security.getMD5("5246"));
-        usuarios.insertar(u9);
-        
-        temp = usuarios.buscar(201503836);
-        if(temp != null){
-            System.out.println(temp.getJSON());
-        } else {
-            System.out.println("No existe el usuario:");
-        }
-        
-        int request = usuarios.eliminar(109803834);
-        //getMessage(request,"Usuario "+ 109803834);
-
-        
-        temp = usuarios.buscar(109803834);
-        if(temp != null){
-            System.out.println(temp.getJSON());
-        } else {
-            System.out.println("No existe el usuario:");
-        }
+//        NodoUsuario temp;
+//        temp = usuarios.buscar(201503836);
+//        if(temp != null){
+//            String json_txt = json.toJson(temp);
+//            System.out.println(json_txt);
+//        } else {
+//            
+//            System.out.println("No existe el usuario:");
+//        }
+//        
+//        NodoUsuario u9 = new NodoUsuario(201503836,"Daniel","Lopez","Ciencias y Sistemas",security.getMD5("5246"));
+//        usuarios.insertar(u9);
+//        
+//        temp = usuarios.buscar(201503836);
+//        if(temp != null){
+//            //System.out.println(temp.getJSON());
+//            //Obtene Json a parter de un objeto
+//            String json_txt = json.toJson(temp);
+//            System.out.println(json_txt);
+//        } else {
+//            System.out.println("No existe el usuario:");
+//        }
+//        
+//        int request = usuarios.eliminar(109803834);
+//        //getMessage(request,"Usuario "+ 109803834);
+//
+//        
+//        temp = usuarios.buscar(109803834);
+//        if(temp != null){
+//            //System.out.println(temp.getJSON());
+//            //Obtene Json a parter de un objeto
+//            String json_txt = json.toJson(temp);
+//            System.out.println(json_txt);
+//        } else {
+//            System.out.println("No existe el usuario:");
+//        }
  
-        
-//        String g = usuarios.getGraphviz("TABLA HASH");
-//        System.out.println(g);
+        System.out.println("");
+
+        String g = usuarios.getGraphviz("TABLA HASH");
+        System.out.println(g);
     }
 }

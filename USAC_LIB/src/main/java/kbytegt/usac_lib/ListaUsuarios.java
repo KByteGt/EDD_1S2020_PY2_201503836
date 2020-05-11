@@ -39,14 +39,22 @@ public class ListaUsuarios {
     public int insertar(NodoUsuario usuario){
         if(this.inicio != null){
             //Ya hay datos
-            NodoUsuario temp;
+            NodoUsuario temp, auxiliar;
+            boolean find = false;
             temp = this.inicio;
 
+            System.out.println("Insertando Usuario en la lista...");
             while(temp.getSiguiente() != null && temp.getCarnet() != usuario.getCarnet()){
-                temp.getSiguiente();
-            }
+                if(temp.getCarnet() == usuario.getCarnet()){
+                    auxiliar = temp;
+                    find = true;
+                }
+                System.out.println(" |> Buscando: "+ temp.getCarnet() +" = "+ usuario.getCarnet());
+                temp = temp.getSiguiente(); //<- Errores que dan gusto jajajaja
+            } 
             //VERIFICAR SI ES NULL O IGUAL
             if(temp.getCarnet() == usuario.getCarnet()){
+                System.out.println("Se encontro igual... solo se actualizará la info, pero no el carnet");
                 //EL TEMP.CARNET ES IGUAL A USUARIO.CARNET
                 temp.setNombre(usuario.getNombre());
                 temp.setApellido(usuario.getApellido());
@@ -55,11 +63,13 @@ public class ListaUsuarios {
                 return REQUEST_UPDATED;
             } else {
                 //Agregar al final
+                System.out.println("Insertando Usuario al final...");
                 temp.setSiguiente(usuario);
                 return REQUEST_OK;
-            }
+            } 
         } else {
             //No hay nada en el inicio
+            System.out.println("Insertanod Usuario por primera vez...");
             this.inicio = usuario;
             return REQUEST_OK;
         }

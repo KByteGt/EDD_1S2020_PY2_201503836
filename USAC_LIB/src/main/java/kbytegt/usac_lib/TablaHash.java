@@ -46,11 +46,13 @@ public class TablaHash {
     
     private int iniciarTabla(){
         try {
+            System.out.println("Iniciando nodos en tabla hash");
             for (int i = 0; i < this.size; i++) {
                 this.tabla[i] = new NodoHash(i);
             }
             return REQUEST_OK;
         } catch (Exception e) {
+            System.out.println("Error alinicializar nodos en tabla hash");
             return REQUEST_ERROR;
         }
     }
@@ -64,6 +66,7 @@ public class TablaHash {
         //Obtener indice
         int i = funcion(usuario.getCarnet());
         
+        System.out.println(" -- Insertar usuario en la klave: "+i);
         int request = tabla[i].insertar(usuario);
         
         return request;

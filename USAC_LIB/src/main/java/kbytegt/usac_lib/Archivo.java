@@ -7,7 +7,7 @@ package kbytegt.usac_lib;
 import java.io.*;
 /**
  *
- * @author JOSED
+ * @author KByteGt
  */
 public class Archivo {
     
