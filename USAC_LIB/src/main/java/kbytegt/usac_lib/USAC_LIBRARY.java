@@ -14,6 +14,8 @@ import com.google.gson.JsonParser;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
 
+import java.math.BigInteger;
+
 /**
  *
  * @author KByteGt
@@ -39,6 +41,7 @@ public class USAC_LIBRARY {
     static Gson json;
     static Security security;
     static TablaHash usuarios;
+    static ArbolB categoria;
     static UIlogin login = new UIlogin();
 
     /**
@@ -142,23 +145,23 @@ public class USAC_LIBRARY {
 //        System.out.println(json);
         
             
-        NodoUsuario u1 = new NodoUsuario(201503836,"Daniel","Lopez","Ciencias y Sistemas",security.getMD5("123456"));
-        NodoUsuario u2 = new NodoUsuario(201503476,"Ricardo","Cutz","Ingenieria en istemas",security.getMD5("12b456"));
-        NodoUsuario u3 = new NodoUsuario(201503477,"Juanito","Hernandez","Ingenieria Civil",security.getMD5("abf34543"));
-        NodoUsuario u4 = new NodoUsuario(202005878,"Antonio","Hernandez","Ingenieria Electrica",security.getMD5("asdfghjkl"));
-        NodoUsuario u5 = new NodoUsuario(201003866,"Pedrito","Lopez","Ciencias y Sistemas",security.getMD5("eewe3434"));
-        NodoUsuario u6 = new NodoUsuario(201103336,"Miguel","Lopez","Ciencias y Sistemas",security.getMD5("1234"));
-        NodoUsuario u7 = new NodoUsuario(109803834,"Juan","Lopez","Ciencias y Sistemas",security.getMD5("juan123"));
-        NodoUsuario u8 = new NodoUsuario(201504876,"Juan","Lemus","Ciencias y Sistemas",security.getMD5("1sss3356"));
-        
-        usuarios.insertar(u1);
-        usuarios.insertar(u2);
-        usuarios.insertar(u3);
-        usuarios.insertar(u4);
-        usuarios.insertar(u5);
-        usuarios.insertar(u6);
-        usuarios.insertar(u7);
-        usuarios.insertar(u8);
+//        NodoUsuario u1 = new NodoUsuario(201503836,"Daniel","Lopez","Ciencias y Sistemas",security.getMD5("123456"));
+//        NodoUsuario u2 = new NodoUsuario(201503476,"Ricardo","Cutz","Ingenieria en istemas",security.getMD5("12b456"));
+//        NodoUsuario u3 = new NodoUsuario(201503477,"Juanito","Hernandez","Ingenieria Civil",security.getMD5("abf34543"));
+//        NodoUsuario u4 = new NodoUsuario(202005878,"Antonio","Hernandez","Ingenieria Electrica",security.getMD5("asdfghjkl"));
+//        NodoUsuario u5 = new NodoUsuario(201003866,"Pedrito","Lopez","Ciencias y Sistemas",security.getMD5("eewe3434"));
+//        NodoUsuario u6 = new NodoUsuario(201103336,"Miguel","Lopez","Ciencias y Sistemas",security.getMD5("1234"));
+//        NodoUsuario u7 = new NodoUsuario(109803834,"Juan","Lopez","Ciencias y Sistemas",security.getMD5("juan123"));
+//        NodoUsuario u8 = new NodoUsuario(201504876,"Juan","Lemus","Ciencias y Sistemas",security.getMD5("1sss3356"));
+//        
+//        usuarios.insertar(u1);
+//        usuarios.insertar(u2);
+//        usuarios.insertar(u3);
+//        usuarios.insertar(u4);
+//        usuarios.insertar(u5);
+//        usuarios.insertar(u6);
+//        usuarios.insertar(u7);
+//        usuarios.insertar(u8);
         
         
 //        NodoUsuario temp;
@@ -198,9 +201,71 @@ public class USAC_LIBRARY {
 //            System.out.println("No existe el usuario:");
 //        }
  
-        System.out.println("");
+//        System.out.println("");
+//
+//        String g = usuarios.getGraphviz("TABLA HASH");
+//        System.out.println(g);
 
-        String g = usuarios.getGraphviz("TABLA HASH");
-        System.out.println(g);
+
+        //ARBOL B
+        categoria = new ArbolB(2);
+        
+        Libro lib1 = new Libro(new BigInteger("6"),"Curso de derecho constitucional","ESCOBAR, DAVID","3M España",1891,"2","Consulta","Español",201503836);
+        Libro lib2 = new Libro(new BigInteger("11"),"Canales de comercialización","ESCOBAR, FRANCISCO","3R EDITORES",1999,"1","Consulta","Ingles",201503836);
+        Libro lib3 = new Libro(new BigInteger("5"),"Planeación estratégica aplicada","ESCOBAR, FRANCISCO ANDRÉS","3M España",1895,"2","Consulta","Español",201503836);
+        Libro lib4 = new Libro(new BigInteger("4"),"A New Directions Book","ESCOBAR, JORGE R","3M España",1991,"2","Consulta","Español",201503836);
+        Libro lib5 = new Libro(new BigInteger("8"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib6 = new Libro(new BigInteger("9"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib7 = new Libro(new BigInteger("12"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib8 = new Libro(new BigInteger("21"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib9 = new Libro(new BigInteger("74"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib10 = new Libro(new BigInteger("75"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib11 = new Libro(new BigInteger("76"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib12 = new Libro(new BigInteger("77"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib13 = new Libro(new BigInteger("78"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib14 = new Libro(new BigInteger("79"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib15 = new Libro(new BigInteger("13"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib16 = new Libro(new BigInteger("22"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib17 = new Libro(new BigInteger("32"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib18 = new Libro(new BigInteger("49"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib19 = new Libro(new BigInteger("52"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib20 = new Libro(new BigInteger("62"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        
+         
+        
+        categoria.insertar(lib1);
+        categoria.insertar(lib2);
+        categoria.insertar(lib3);
+        categoria.insertar(lib4);
+        categoria.insertar(lib5);
+        categoria.insertar(lib6);
+        categoria.insertar(lib7);
+        categoria.insertar(lib8);
+        categoria.insertar(lib9);
+        categoria.insertar(lib10);
+        categoria.insertar(lib11);
+        categoria.insertar(lib12);
+        categoria.insertar(lib13);
+        categoria.insertar(lib14);
+        categoria.insertar(lib15);
+        categoria.insertar(lib16);
+        categoria.insertar(lib17);
+        categoria.insertar(lib18);
+        categoria.insertar(lib19);
+        categoria.insertar(lib20);
+        
+        categoria.recorrer();
+        
+        //Eliminar libros
+//        
+        categoria.eliminar(new BigInteger("12"));
+        categoria.recorrer();
+//        
+//        categoria.eliminar(new BigInteger("1"));
+//        categoria.recorrer();
+        
+        System.out.println(categoria.getGraphviz("x"));
+        
+        //categoria.buscarISBN(new BigInteger("10765"));
     }
 }
