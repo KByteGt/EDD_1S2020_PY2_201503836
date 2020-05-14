@@ -167,7 +167,8 @@ public class UIlogin extends javax.swing.JFrame {
             if(temp != null){
                 if(temp.getPassword().equals(security.getMD5(pass))){
                     //Enviar al usuario al menú principal
-                    JOptionPane.showMessageDialog(null, "Ingreso exitoso","LogIn",JOptionPane.PLAIN_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "Ingreso exitoso","LogIn",JOptionPane.PLAIN_MESSAGE);
+                    USAC_LIBRARY.LogIn(temp.getCarnet());
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas","LogIn",JOptionPane.WARNING_MESSAGE);
                 }

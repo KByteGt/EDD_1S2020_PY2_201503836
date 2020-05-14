@@ -98,6 +98,22 @@ public class NodoB {
 //        System.out.println("}");
     }
     
+    public int contar(int x){
+        //Imprimir en consola el recorrido del nodo
+        
+        int i;
+        for ( i = 0; i < this.n; i++) {
+            if (!hoja) {
+                nodos[i].contar(x);
+            }
+            x++;
+        }
+        if (!hoja) {
+            nodos[i].contar(x);
+        }
+        return x;
+    }
+    
     public Libro buscarISBN(BigInteger k){
         int i = 0;
         while(i < n && k.compareTo(keys[i].getISBN()) > 0){
@@ -220,14 +236,13 @@ public class NodoB {
                 }
                 
                 if(flag && id > n){
-                    nodos[id -1].eliminar(isbn);
+                    return nodos[id -1].eliminar(isbn);
                 } else {
-                    nodos[id].eliminar(isbn);
+                    return  nodos[id].eliminar(isbn);
                 }
-                return REQUEST_OK;
             } else {
                 //Es un nodo hoja, no existe el libro a eliminar
-                System.out.println(" ["+isbn+"]El libro no existe...");
+                //System.out.println(" ["+isbn+"]El libro no existe...");
                 return REQUEST_NO_CONTENT;
             }
         }

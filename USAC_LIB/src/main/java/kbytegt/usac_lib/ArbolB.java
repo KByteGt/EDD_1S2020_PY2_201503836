@@ -33,6 +33,14 @@ public class ArbolB {
         }
     }
     
+    public int contar(){
+        if(this.raiz != null){
+            return this.raiz.contar(0);
+        } else {
+            return 0;
+        }
+    }
+    
     public Libro buscarISBN(BigInteger k){
         return (this.raiz == null)? null : this.raiz.buscarISBN(k);
     }
