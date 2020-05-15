@@ -38,18 +38,23 @@ public class USAC_LIBRARY {
     static final int REQUEST_AUTHENTICATION_REQUIRED = 511;
     
     /////////////////////////////////////////////////////////
-    static String carpeta;
-    static String ip;
-    static int puesrto;
+    static String carpeta = "";
+    static String ip = "";
+    static int puesrto = 0;
     /////////////////////////////////////////////////////////
     static Gson json;
     static Security security;
     static TablaHash usuarios;
     static ArbolB categoria;
     static ArbolAVL biblioteca;
-    static UIlogin login = new UIlogin();
+    static UIlogin ui_login = new UIlogin();
+    static UIlibrary ui_library = new UIlibrary();
     
     static boolean isLogin = false;
+    static int carnetLogin;
+    static String nombreLogin;
+    static String apellidoLogin;
+    static String carreraLogin;
 
     /**
      * @param args the command line arguments
@@ -58,6 +63,7 @@ public class USAC_LIBRARY {
         // TODO code application logic here
         //json = new GsonBuilder().serializeNulls().create();
         usuarios = new TablaHash(45);
+        biblioteca = new ArbolAVL();
         
         System.out.println("Preparando pruebas");
         test();
@@ -65,7 +71,7 @@ public class USAC_LIBRARY {
         //Cargar el LogIn
         try {
             System.out.println("Abriendo ventana LogIn");
-            login.setVisible(!isLogin);
+            ui_login.setVisible(!isLogin);
         } catch (Exception e) {
             System.out.println("Error al abrir la ventana UIlogin");
         }
@@ -73,12 +79,31 @@ public class USAC_LIBRARY {
         
 
     }    
-    public static void LogIn(int carnet){
+    public static void LogIn(){
         //Inicio de sesión exitosa
-        System.out.println("Usuario "+carnet+" conectado...");
+        System.out.println("Usuario "+carnetLogin+" conectado...");
+        isLogin = true;
+        ui_login.setVisible(!isLogin);
+        ui_library.setVisible(isLogin);
+        ui_library.actualizarJTree(biblioteca.getListaCategorias());
+        
     }
+    
+    public static ListaCategorias getCategorias(){
+        return biblioteca.getListaCategorias();
+    }
+    
+    public static void ingresarLibros(String txt){
+        try {
+            System.out.println(" - Cargando libros...");
+        } catch (Exception e) {
+            System.err.println(" Problemas al cargar los libros...");
+        }
+    }
+    
     public static void ingresarUsuarios(String txt){
         try {
+            System.out.println(" - Cargando usuarios...");
             JsonParser parser = new JsonParser();
             JsonObject json_usuarios = parser.parse(txt).getAsJsonObject();
 
@@ -96,8 +121,9 @@ public class USAC_LIBRARY {
                 
                 System.out.println("["+carnet+"] "+nombre+" "+apellido+" - "+carrera+" > "+password);
             }  
+            System.out.println("Fin de carga de usuarios...");
         } catch (Exception e) {
-            System.out.println("Error al leer JSON");
+            System.err.println(" Problema al cargar los usuarios...");
         }
                 
     }
@@ -220,12 +246,12 @@ public class USAC_LIBRARY {
 //        //ARBOL B
 //        categoria = new ArbolB(2);
 //        
-//        Libro lib1 = new Libro(new BigInteger("6"),"Curso de derecho constitucional","ESCOBAR, DAVID","3M España",1891,"2","Consulta","Español",201503836);
-//        Libro lib2 = new Libro(new BigInteger("11"),"Canales de comercialización","ESCOBAR, FRANCISCO","3R EDITORES",1999,"1","Consulta","Ingles",201503836);
-//        Libro lib3 = new Libro(new BigInteger("5"),"Planeación estratégica aplicada","ESCOBAR, FRANCISCO ANDRÉS","3M España",1895,"2","Consulta","Español",201503836);
-//        Libro lib4 = new Libro(new BigInteger("4"),"A New Directions Book","ESCOBAR, JORGE R","3M España",1991,"2","Consulta","Español",201503836);
-//        Libro lib5 = new Libro(new BigInteger("8"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
-//        Libro lib6 = new Libro(new BigInteger("9"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
+        Libro lib1 = new Libro(new BigInteger("6"),"Curso de derecho constitucional","ESCOBAR, DAVID","3M España",1891,"2","Consulta","Español",201503836);
+        Libro lib2 = new Libro(new BigInteger("11"),"Canales de comercialización","ESCOBAR, FRANCISCO","3R EDITORES",1999,"1","Consulta","Ingles",201503836);
+        Libro lib3 = new Libro(new BigInteger("5"),"Planeación estratégica aplicada","ESCOBAR, FRANCISCO ANDRÉS","3M España",1895,"2","Investigacion","Español",201503836);
+        Libro lib4 = new Libro(new BigInteger("4"),"A New Directions Book","ESCOBAR, JORGE R","3M España",1991,"2","Otros","Español",201503836);
+        Libro lib5 = new Libro(new BigInteger("8"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Fantasia","Español",201503836);
+        Libro lib6 = new Libro(new BigInteger("9"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Fantasia","Español",201503836);
 //        Libro lib7 = new Libro(new BigInteger("12"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
 //        Libro lib8 = new Libro(new BigInteger("21"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
 //        Libro lib9 = new Libro(new BigInteger("74"),"A Plume Book","ESCOBEDO ARIAS DE TORALLA, LAURA LUCRECIA","3M España",1997,"2","Consulta","Español",201503836);
@@ -280,49 +306,111 @@ public class USAC_LIBRARY {
         
         
         //ARBOL AVL
-        biblioteca = new ArbolAVL();
+//        biblioteca = new ArbolAVL();
        
-        biblioteca.setRaiz(biblioteca.insertar("Historia", new BigInteger("201503836")));
-        biblioteca.setRaiz(biblioteca.insertar("Ciencia", new BigInteger("201503836")));
-        biblioteca.setRaiz(biblioteca.insertar("Biologia", new BigInteger("201503836")));
-        biblioteca.setRaiz(biblioteca.insertar("Infantil", new BigInteger("201503836")));
-        biblioteca.setRaiz(biblioteca.insertar("Religion", new BigInteger("201503836")));
-        System.out.println("\nArbol ABL:");
-        biblioteca.recorrer(biblioteca.getRaiz());
+//        biblioteca.insertar("Historia", 201503836);
+//////        biblioteca.setRaiz(biblioteca.insertar("Historia", new BigInteger("201503836")));
+//        biblioteca.insertar("Ciencia", 201503836);
+//        biblioteca.insertar("Biologia", 201503836);
+//        biblioteca.insertar("Infantil", 201503836);
+//        biblioteca.insertar("Religion", 201503836);
+//        biblioteca.insertar("Consulta", 201503836);
+//        System.out.println("\nArbol ABL:");
+//        biblioteca.recorrer();
         
-        biblioteca.setRaiz(biblioteca.eliminar("Historia", new BigInteger("2222")));
-        System.out.println("\nArbol ABL:");
-        biblioteca.recorrer(biblioteca.getRaiz());
+//        biblioteca.setRaiz(biblioteca.eliminar("Historia", new BigInteger("2222")));
+//        System.out.println("\nArbol ABL:");
+//        biblioteca.recorrer(biblioteca.getRaiz());
+//        
+//        biblioteca.setRaiz(biblioteca.eliminar("Historia", new BigInteger("201503836")));
+//        System.out.println("\nArbol ABL:");
+//        biblioteca.recorrer(biblioteca.getRaiz());
         
-        biblioteca.setRaiz(biblioteca.eliminar("Historia", new BigInteger("201503836")));
-        System.out.println("\nArbol ABL:");
-        biblioteca.recorrer(biblioteca.getRaiz());
-        
-        NodoCategoria temp;
-        temp = biblioteca.buscar("Religion");
-        if(temp != null){
-            System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
-//            if(temp.getNombre().compareTo("Religion") == 0){
-//                System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
+//        NodoCategoria temp;
+//        temp = biblioteca.buscar("Religion");
+//        if(temp != null){
+//            System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
+////            if(temp.getNombre().compareTo("Religion") == 0){
+////                System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
+////            } else {
+////                System.out.println("Categoria no encontrada");
+////            }
+//            
+//        } else {
+//            System.out.println("No se encontro la categoria");
+//        }
+//        
+//        temp = biblioteca.buscar("Historia");
+//        if(temp != null){
+//            System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
+////            if(temp.getNombre().compareTo("Religion") == 0){
+////                System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
+////            } else {
+////                System.out.println("Categoria no encontrada");
+////            }
+//            
+//        } else {
+//            System.out.println("No se encontro la categoria");
+//        }
+
+//          ListaCategorias lista = biblioteca.getListaCategorias();
+//          NodoLC temp = lista.getInicio();
+//          System.out.println(" - Imprimir Lista de categorias de Árbol AVL");
+//          while(temp.getSiguiente() != null){
+//              System.out.println(temp.getCategoria());
+//              temp = temp.getSiguiente();
+//          }
+//          System.out.println(temp.getCategoria());
+
+//            ArbolB tempTree;
+//            ListaLibros listal = null;
+//
+//            if(biblioteca.existe("Ciencia")){
+//                System.out.println("Categoria Ciencia existe");
+//                
+//                tempTree = biblioteca.buscar("Ciencia").getLibros();
+//                
+//                listal = tempTree.getListaLibros();
+//                tempTree.recorrer();
+//
 //            } else {
-//                System.out.println("Categoria no encontrada");
+//                System.out.println("No existe categoria Ciencia");
 //            }
-            
-        } else {
-            System.out.println("No se encontro la categoria");
-        }
-        
-        temp = biblioteca.buscar("Historia");
-        if(temp != null){
-            System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
-//            if(temp.getNombre().compareTo("Religion") == 0){
-//                System.out.println(temp.getNombre()+ " - "+temp.getUsuario());
-//            } else {
-//                System.out.println("Categoria no encontrada");
+//                       
+//            
+//            //biblioteca.buscar("Ciencia").recorrer();
+//            if(listal != null){
+//                System.out.println(" total en lista: "+listal.getContador());
+//                NodoLL temp = listal.getInicio();
+//                while(temp.getSiguiente() != null){
+//                    System.out.println(" -> "+temp.getLibro().getTitulo());
+//                    temp = temp.getSiguiente();
+//                }
+//                System.out.println(" -> "+temp.getLibro().getTitulo());
 //            }
+
+            //Prueba de inreso de libros por medio de AVL
+            biblioteca.insertarLibro(lib1);
+            biblioteca.insertarLibro(lib2);
+            biblioteca.insertarLibro(lib3);
+            biblioteca.insertarLibro(lib4);
+            biblioteca.insertarLibro(lib5);
+            biblioteca.insertarLibro(lib6);
             
-        } else {
-            System.out.println("No se encontro la categoria");
-        }
+            biblioteca.recorrer();
+            
+            ArbolB tempTree;
+            NodoCategoria temp;
+            
+            System.out.println(" Buscando Ciencia");
+            temp = biblioteca.buscar("Ciencia");
+            if(temp != null)
+                temp.recorrer();
+            
+            System.out.println(" Buscando Consulta");
+            temp = biblioteca.buscar("Consulta");
+            if(temp != null)
+                temp.recorrer();
+            
     }
 }

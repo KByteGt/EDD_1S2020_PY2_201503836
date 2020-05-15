@@ -5,12 +5,47 @@
  */
 package kbytegt.usac_lib;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 /**
  *
  * @author JOSED
  */
-public class UIlibrary extends javax.swing.JFrame {
-
+public final class UIlibrary extends javax.swing.JFrame {
+    
+    ListaCategorias lcategorias;
+    DefaultMutableTreeNode categorias = new DefaultMutableTreeNode("Categorias");
+    DefaultTreeModel modelo = new DefaultTreeModel(categorias);
+    
+    /*
+     *  Actualizar JTree
+     */
+    public void actualizarJTree(ListaCategorias lista){
+        jTree1.setModel(modelo);
+        DefaultMutableTreeNode cat;
+        
+        if(lista != null){
+            NodoLC temp = lista.getInicio();
+        
+            while(temp.getSiguiente() != null){
+                //Agregar categoria a jTree
+                System.out.println(" -> "+temp.getCategoria());
+                cat = new DefaultMutableTreeNode(temp.getCategoria());
+                modelo.insertNodeInto(cat, categorias, 0);
+                temp = temp.getSiguiente();
+            }
+            System.out.println(" -> "+temp.getCategoria());
+            cat = new DefaultMutableTreeNode(temp.getCategoria());
+            modelo.insertNodeInto(cat, categorias, 0);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo obtener las categorias del Árbol AVL");
+        }
+       
+    }
     /**
      * Creates new form UIlibrary
      */
@@ -27,12 +62,14 @@ public class UIlibrary extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -58,6 +95,7 @@ public class UIlibrary extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Biblioteca virtual");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("[ISBN] libro:");
@@ -65,6 +103,11 @@ public class UIlibrary extends javax.swing.JFrame {
         jTextField1.setText("ISBN");
 
         jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,6 +136,18 @@ public class UIlibrary extends javax.swing.JFrame {
         );
 
         jButton1.setText("Cargar archivo JSON - libros");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Agregar libro");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -100,29 +155,58 @@ public class UIlibrary extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jButton1)
+                .addComponent(jButton3))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Libreria"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Biblioteca"));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ISBN", "Titulo", "Autor", "Editorial", "Año", "Edición", "Idioma"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Biblioteca");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.setMaximumSize(new java.awt.Dimension(65, 16));
+        jTree1.setMinimumSize(new java.awt.Dimension(30, 0));
+        jTree1.setPreferredSize(new java.awt.Dimension(65, 16));
+        jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTree1ValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTree1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -223,6 +307,39 @@ public class UIlibrary extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // BOTON BUSCAR LIBRO POR ISBN
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // BOTON CARGAR JSON DE LIBROS
+        
+        // LEER ARCHIVO JSON EN RUTA
+        Archivo a = new Archivo();
+        String txt;
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JavaScript Object Notation", "json");
+        jFileChooser1.setFileFilter(filter);
+        int returnVal = jFileChooser1.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println(jFileChooser1.getSelectedFile().getAbsolutePath());
+            txt = a.getJson(jFileChooser1.getSelectedFile().getAbsolutePath());
+           
+            USAC_LIBRARY.ingresarLibros(txt);
+            //System.out.println(txt);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // BOTON AGREGAR LIBRO
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
+        // METODO QUE OBTIENE LA CATEGORIA A MOSTRAR EN LA TABLA
+        DefaultMutableTreeNode categoria = (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
+        JOptionPane.showMessageDialog(this, categoria.getPath());
+    }//GEN-LAST:event_jTree1ValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -261,6 +378,8 @@ public class UIlibrary extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

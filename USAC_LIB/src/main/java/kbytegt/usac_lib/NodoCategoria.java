@@ -15,13 +15,13 @@ import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
  */
 public class NodoCategoria {
     private String nombre;
-    private BigInteger usuario;
+    private int usuario;
     private ArbolB libros;
     private int total, altura;
     
     private NodoCategoria izquierda, derecha;
     
-    public NodoCategoria(String nombre, BigInteger carnet){
+    public NodoCategoria(String nombre, int carnet){
         this.nombre = nombre;
         this.usuario = carnet;
         libros = new ArbolB(2);
@@ -39,11 +39,11 @@ public class NodoCategoria {
         this.nombre = nombre;
     }
 
-    public BigInteger getUsuario() {
+    public int getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(BigInteger usuario) {
+    public void setUsuario(int usuario) {
         this.usuario = usuario;
     }
 
@@ -113,6 +113,8 @@ public class NodoCategoria {
         }
     }
     
+    
+    
     public void insertarLibro(Libro lib){
         this.libros.insertar(lib);
         this.total++;
@@ -128,5 +130,17 @@ public class NodoCategoria {
         String g = "";
         
         return g;
+    }
+    
+    public void recorrer(){
+        this.libros.recorrer();
+    }
+    
+    public ListaLibros getListaLibros(){
+        return this.libros.getListaLibros();
+    }
+    
+    public Libro buscarISBN(BigInteger i){
+        return this.libros.buscarISBN(i);
     }
 }

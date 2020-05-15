@@ -115,20 +115,25 @@ public class NodoB {
     }
     
     public Libro buscarISBN(BigInteger k){
-        int i = 0;
-        while(i < n && k.compareTo(keys[i].getISBN()) > 0){
-            i++;
-        }
-        
-        if(keys[i].getISBN().compareTo(k) == 0){
-            return keys[i];
-        }
-        
-        if(hoja){
+        try {
+            int i = 0;
+            while(i < n && k.compareTo(keys[i].getISBN()) > 0){
+                i++;
+            }
+
+            if(keys[i].getISBN().compareTo(k) == 0){
+                return keys[i];
+            }
+
+            if(hoja){
+                return null;
+            }
+
+            return nodos[i].buscarISBN(k);
+        } catch (Exception e) {
             return null;
         }
         
-        return nodos[i].buscarISBN(k);
     }
     
     public Libro[] buscarPorNombre(String nombre){
@@ -168,11 +173,11 @@ public class NodoB {
         //Nuevo nodo temp, almacena (criterio -1) de las keys
         NodoB temp = new NodoB(y.getT(),y.isHoja());
         temp.setN(t -1);
-        System.out.println(" - SepararHijo("+i+")");
+//        System.out.println(" - SepararHijo("+i+")");
         //Copiar keys hasta (criterio -1) de y a temp
         for (int j = 0; j < t -1; j++) {
-            System.out.println("t = "+t);
-            System.out.println("j = " + j +", j+t = "+(j+t));
+//            System.out.println("t = "+t);
+//            System.out.println("j = " + j +", j+t = "+(j+t));
             temp.keys[j] = y.keys[j+t];
         }
         
@@ -409,6 +414,35 @@ public class NodoB {
         //Actualizar el contador de keys
         n--;
         
+    }
+    
+    //Obtener lista ordenada de Libros para tabla
+    
+    public ListaLibros getListaLibros(ListaLibros l){
+         //Llenar listaLibros
+        int i;
+//        int j;
+//        for(j = 0; j < this.n; j++) {
+//            System.out.println(" insertando libro en la lista: "+keys[j].getTitulo());
+//            lista.insertar(keys[j]);
+//        }
+        
+        for ( i = 0; i < this.n; i++) {
+            if (!hoja) {
+                //Imprimir ramas internas
+                nodos[i].getListaLibros(l);
+            }
+//            System.out.println(" insertando libro en la lista: "+keys[i].getTitulo());
+            l.insertar(keys[i]);
+            //System.out.print(" ["+keys[i].getISBN() + "] "+ keys[i].getTitulo());
+        }
+
+        if (!hoja) {
+            //Imprimir ultima rama
+            nodos[i].getListaLibros(l);
+        }
+        
+        return l;
     }
     
     //Graphviz

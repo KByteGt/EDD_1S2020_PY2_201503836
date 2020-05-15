@@ -5,18 +5,18 @@
  */
 package kbytegt.usac_lib;
 
-import java.math.BigInteger;
-
 /**
  *
  * @author KByteGt
  */
 public class ArbolAVL {
     private NodoCategoria raiz;
+    private ListaCategorias lista;
     
     public ArbolAVL(){
         //Constructor
         this.raiz = null;
+        this.lista = new ListaCategorias();
     }
 
     public NodoCategoria getRaiz() {
@@ -25,6 +25,10 @@ public class ArbolAVL {
 
     public void setRaiz(NodoCategoria raiz) {
         this.raiz = raiz;
+    }
+    
+    public ListaCategorias getLista(){
+        return lista;
     }
     
     //Funciones
@@ -89,11 +93,15 @@ public class ArbolAVL {
     }
     
     //Insertar
-    public NodoCategoria insertar(String nombre, BigInteger carnet){
-        return insertar(raiz,nombre,carnet);
+//    public NodoCategoria insertar(String nombre, BigInteger carnet){
+//        //return insertar(raiz,nombre,carnet);
+//    }
+    
+    public void insertar(String nombre, int carnet){
+        this.raiz = insertar(raiz, nombre, carnet);
     }
     
-    private NodoCategoria insertar(NodoCategoria nodo, String nombre, BigInteger carnet){
+    private NodoCategoria insertar(NodoCategoria nodo, String nombre, int carnet){
         //1- Inserción normal
         if(nodo == null){
             return (new NodoCategoria(nombre,carnet));
@@ -150,14 +158,14 @@ public class ArbolAVL {
         
         return actual;
     }
-    public NodoCategoria eliminar(String nombre, BigInteger usuario){
+    public NodoCategoria eliminar(String nombre, int usuario){
         if(this.raiz != null){
             return eliminar(this.raiz,nombre,usuario);
         } else {
             return null;
         }
     }
-    private NodoCategoria eliminar(NodoCategoria raiz, String nombre, BigInteger usuario){
+    private NodoCategoria eliminar(NodoCategoria raiz, String nombre, int usuario){
         //1- Eliminación normal
         if(raiz == null){
             return raiz;
@@ -173,7 +181,7 @@ public class ArbolAVL {
         } else {
             //Nodo igual, eliminar
             //Nodo con un hijo o sin hijos
-            if(usuario.compareTo(raiz.getUsuario()) == 0){
+            if(usuario == raiz.getUsuario()){
                 //La categoria a eliminar pertenece al usuario
                 if((raiz.getIzquierda() == null) || (raiz.getDerecha() == null)){
                     NodoCategoria temp = null;
@@ -262,6 +270,7 @@ public class ArbolAVL {
             }
             temp = buscar(raiz,nombre);
         }
+
 //        if(raiz != null){
 //            //Busqueda
 //            if(nombre.compareTo(raiz.getNombre()) < 0){
@@ -279,9 +288,32 @@ public class ArbolAVL {
         return temp;
     }
     
-    //Recorrer árbol AVL
+    //Función que busca una categoria
+    public boolean existe(String nombre){
+        return existe(raiz, nombre);
+    }
     
-    public void recorrer(NodoCategoria nodo){
+    private boolean existe(NodoCategoria raiz, String nombre){
+        boolean flag = false;
+        while(raiz != null && !flag){
+            if(nombre.compareTo(raiz.getNombre()) < 0){
+                raiz = raiz.getIzquierda();
+            }else if(nombre.compareTo(raiz.getNombre()) > 0){
+                raiz = raiz.getDerecha();
+            } else {
+                flag = true;
+                return true;
+            }
+            
+        }
+        return flag;
+    }
+    
+    //Recorrer árbol AVL
+    public void recorrer(){
+        recorrer(raiz);
+    }
+    private void recorrer(NodoCategoria nodo){
         if(nodo != null){
 //            //Pre orden
 //            System.out.println(nodo.getNombre() + " ");
@@ -295,4 +327,55 @@ public class ArbolAVL {
         }
     }
     
+    //Retornar lista con categorias 
+    public ListaCategorias getListaCategorias(){
+        if(raiz != null){
+            this.lista.vaciar();
+            llenarListaCategorias(raiz);
+            return this.lista;
+        } else {
+            return null;
+        }
+        
+    }
+    
+    private void llenarListaCategorias(NodoCategoria nodo){
+        if(nodo != null){
+            llenarListaCategorias(nodo.getIzquierda());
+            lista.insertar(nodo.getNombre());
+            llenarListaCategorias(nodo.getDerecha());
+        }
+    }
+    
+    public void insertarLibro(Libro lib){
+        /*
+         *  1- Verificar que exita la categoria
+         *      - sin no exite: se crea la categoria y se inserta el libro
+         *      - Si existe: paso 2
+         *  2- Verificar que no exista un libro con el mismo ISBN
+         *      - Si existe no se hace nada
+         *      - Si no existe se crea
+         */
+        
+        System.out.println(" -- Buscando categoria: " + lib.getCategoria());
+        NodoCategoria categoria = buscar(lib.getCategoria());
+        if(categoria != null){
+            //Existe la categoria
+            System.out.println(" -- Ya existe la categoria");
+            if(categoria.buscarISBN(lib.getISBN()) == null){
+                //No existe el libor
+                categoria.insertarLibro(lib);
+            } else {
+                //Exite el libro 
+                System.out.println(" **Ya existe el libro ["+lib.getISBN()+"] "+lib.getTitulo()+" en la categoria "+lib.getCategoria());
+            }
+        } else {
+            //No existe la categoria
+            //Crear categoria
+            insertar(lib.getCategoria(),lib.getCarnet());
+            //Insertar en categoria
+            buscar(lib.getCategoria()).insertarLibro(lib);
+        }
+        
+    }
 }

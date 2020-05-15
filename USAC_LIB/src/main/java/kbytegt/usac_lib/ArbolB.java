@@ -17,17 +17,20 @@ public class ArbolB {
     private NodoB raiz;
     //private final int grado;          //Grado máximo (número máximo de keys en el vector) 
     private final int t;                //Grado minimo (Número minimo de keys en el vector)
+    private ListaLibros lista;
 
     public ArbolB(int t) {
         this.raiz = null;
         this.t = t;
+        
+        this.lista = new ListaLibros();
     }
     
     public void recorrer(){
         if(this.raiz != null){
-            System.out.println(" Árbol B");
+//            System.out.println(" Árbol B");
             this.raiz.recorer();
-            System.out.println(" ----");
+//            System.out.println(" ----");
         } else {
             System.out.println("Arbol B vacio!!!");
         }
@@ -92,6 +95,16 @@ public class ArbolB {
             return REQUEST_ERROR;
         }
     }
+    
+    public ListaLibros getListaLibros(){
+        this.lista.vaciar();
+        if(this.raiz != null){
+            return this.raiz.getListaLibros(this.lista);
+        } else {
+            return null;
+        }
+    }
+    
     
     public String getGraphviz(String nombre){
         String g = "";
