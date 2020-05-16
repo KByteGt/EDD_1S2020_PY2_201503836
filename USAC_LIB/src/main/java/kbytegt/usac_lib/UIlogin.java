@@ -46,7 +46,7 @@ public class UIlogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LogIn");
-        setBackground(new java.awt.Color(255, 255, 255));
+        setLocation(new java.awt.Point(450, 50));
         setMaximumSize(new java.awt.Dimension(300, 500));
         setMinimumSize(new java.awt.Dimension(300, 500));
         setName("f_login"); // NOI18N
@@ -99,6 +99,11 @@ public class UIlogin extends javax.swing.JFrame {
         password.setToolTipText("");
 
         usuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                usuarioKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,13 +151,14 @@ public class UIlogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
         // BOTON DE INGRESO
         
         //Obtener usuario y contraseña
-        String user, pass = "";
+        String user,md5, pass = "";
         char[] tempPass;
         int carnet;
         user = usuario.getText();
@@ -163,9 +169,15 @@ public class UIlogin extends javax.swing.JFrame {
         System.out.println(user + "\n" + pass);
         try {
             carnet = Integer.parseInt(user);
+            try {
+                md5 = security.getMD5(pass);
+            } catch (Exception e) {
+                System.out.println(" **Error al generar MD5");
+                md5 = "error al generar md5";
+            }
             NodoUsuario temp = USAC_LIBRARY.usuarios.buscar(carnet);
             if(temp != null){
-                if(temp.getPassword().equals(security.getMD5(pass))){
+                if(temp.getPassword().equals(md5)){
                     //Enviar al usuario al menú principal
                     //JOptionPane.showMessageDialog(null, "Ingreso exitoso","LogIn",JOptionPane.PLAIN_MESSAGE);
                     USAC_LIBRARY.carnetLogin = temp.getCarnet();
@@ -188,7 +200,9 @@ public class UIlogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_entrarActionPerformed
 
     private void btn_registrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarseActionPerformed
-        // TODO add your handling code here:
+        // BOTON DE REGISTRO
+        UIsingup singup = new UIsingup();
+        singup.setVisible(true);
     }//GEN-LAST:event_btn_registrarseActionPerformed
 
     private void btn_cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargarActionPerformed
@@ -203,11 +217,28 @@ public class UIlogin extends javax.swing.JFrame {
             System.out.println(jFileChooser1.getSelectedFile().getAbsolutePath());
             txt = a.getJson(jFileChooser1.getSelectedFile().getAbsolutePath());
            
-            USAC_LIBRARY.ingresarUsuarios(txt);
+            boolean flag = USAC_LIBRARY.ingresarUsuarios(txt);
+            if(flag){
+                JOptionPane.showMessageDialog(this,"Carga de usuarios exitosa","JSON", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,"No se pudieron cargar los usuarios","JSON", JOptionPane.ERROR_MESSAGE);
+            }
             //System.out.println(txt);
         }
         
     }//GEN-LAST:event_btn_cargarActionPerformed
+
+    private void usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usuarioKeyTyped
+        // TODO add your handling code here:
+         // VALIDAR TEXTFIELD DE NUMEROS
+        char validar = evt.getKeyChar();
+        if(Character.isLetter(validar)){
+            getToolkit().beep();
+            evt.consume();
+            
+            JOptionPane.showMessageDialog(this, "Ingresar solo números");
+        }
+    }//GEN-LAST:event_usuarioKeyTyped
 
     /**
      * @param args the command line arguments

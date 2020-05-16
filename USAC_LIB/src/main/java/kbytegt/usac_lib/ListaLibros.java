@@ -5,6 +5,8 @@
  */
 package kbytegt.usac_lib;
 
+import java.math.BigInteger;
+
 /**
  *
  * @author KByteGt
@@ -90,5 +92,35 @@ public class ListaLibros {
     public void vaciar(){
         this.inicio = null;
         this.contador = 0;
+    }
+    
+    public Libro buscar(BigInteger isbn){
+        if(!estaVacio()){
+            NodoLL temp = this.inicio;
+            while(temp.getSiguiente() != null && temp.getLibro().getISBN().compareTo(isbn) != 0){
+                temp = temp.getSiguiente();
+            }
+            if(temp.getLibro().getISBN().compareTo(isbn) == 0){
+                return temp.getLibro();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+    
+    public Libro buscarIndex(int k){
+        int n = 0;
+         if(!estaVacio()){
+            NodoLL temp = this.inicio;
+            while(temp.getSiguiente() != null && n < k){
+                temp = temp.getSiguiente();
+                n++;
+            }
+            return temp.getLibro();
+        } else {
+            return null;
+        }
     }
 }

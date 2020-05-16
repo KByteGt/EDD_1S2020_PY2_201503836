@@ -65,8 +65,8 @@ public class USAC_LIBRARY {
         usuarios = new TablaHash(45);
         biblioteca = new ArbolAVL();
         
-        System.out.println("Preparando pruebas");
-        test();
+        //System.out.println("Preparando pruebas");
+        //test();
         
         //Cargar el LogIn
         try {
@@ -85,7 +85,8 @@ public class USAC_LIBRARY {
         isLogin = true;
         ui_login.setVisible(!isLogin);
         ui_library.setVisible(isLogin);
-        ui_library.actualizarJTree(biblioteca.getListaCategorias());
+        //ui_library.actualizarJTree(biblioteca.getListaCategorias());
+        //ui_library.actualizarJTable(null);
         
     }
     
@@ -101,7 +102,7 @@ public class USAC_LIBRARY {
         }
     }
     
-    public static void ingresarUsuarios(String txt){
+    public static boolean ingresarUsuarios(String txt){
         try {
             System.out.println(" - Cargando usuarios...");
             JsonParser parser = new JsonParser();
@@ -121,11 +122,23 @@ public class USAC_LIBRARY {
                 
                 System.out.println("["+carnet+"] "+nombre+" "+apellido+" - "+carrera+" > "+password);
             }  
+            
             System.out.println("Fin de carga de usuarios...");
+            return true;
         } catch (Exception e) {
             System.err.println(" Problema al cargar los usuarios...");
+            return false;
         }
                 
+    }
+    
+    public static boolean registrarUsuario(NodoUsuario usuario){
+        int respuesta = usuarios.insertar(usuario);
+        if (respuesta == REQUEST_OK) {
+            return true;
+        } else {
+            return false;
+        }
     }
             
     public static String getMessage(int request, String txt){
@@ -181,7 +194,7 @@ public class USAC_LIBRARY {
 //        System.out.println(json);
         
             
-        NodoUsuario u1 = new NodoUsuario(201503836,"Daniel","Lopez","Ciencias y Sistemas",security.getMD5("123456"));
+//        NodoUsuario u1 = new NodoUsuario(201503836,"Daniel","Lopez","Ciencias y Sistemas",security.getMD5("123456"));
 //        NodoUsuario u2 = new NodoUsuario(201503476,"Ricardo","Cutz","Ingenieria en istemas",security.getMD5("12b456"));
 //        NodoUsuario u3 = new NodoUsuario(201503477,"Juanito","Hernandez","Ingenieria Civil",security.getMD5("abf34543"));
 //        NodoUsuario u4 = new NodoUsuario(202005878,"Antonio","Hernandez","Ingenieria Electrica",security.getMD5("asdfghjkl"));
@@ -190,7 +203,7 @@ public class USAC_LIBRARY {
 //        NodoUsuario u7 = new NodoUsuario(109803834,"Juan","Lopez","Ciencias y Sistemas",security.getMD5("juan123"));
 //        NodoUsuario u8 = new NodoUsuario(201504876,"Juan","Lemus","Ciencias y Sistemas",security.getMD5("1sss3356"));
 //        
-        usuarios.insertar(u1);
+//        usuarios.insertar(u1);
 //        usuarios.insertar(u2);
 //        usuarios.insertar(u3);
 //        usuarios.insertar(u4);

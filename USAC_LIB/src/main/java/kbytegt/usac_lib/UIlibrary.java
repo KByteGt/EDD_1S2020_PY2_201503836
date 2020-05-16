@@ -5,9 +5,14 @@
  */
 package kbytegt.usac_lib;
 
+import java.math.BigInteger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -15,18 +20,108 @@ import javax.swing.tree.DefaultTreeModel;
  *
  * @author JOSED
  */
+class ModeloTablaLibros extends AbstractTableModel{
+
+    private ListaLibros lista;
+    public ModeloTablaLibros(ListaLibros lista){
+        System.out.println(" >> Preparando tabla...");
+        this.lista = lista;
+    }
+    @Override
+    public int getRowCount() {
+        if(this.lista != null)
+            return lista.getContador();
+        else
+            return 0;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 7;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Object obj = null;
+        if(this.lista != null){
+            Libro lib =  this.lista.buscarIndex(rowIndex);
+            switch(columnIndex){
+                case 0:
+                    obj = lib.getISBN();
+                    break;
+                case 1:
+                    obj = lib.getTitulo();
+                    break;
+                case 2:
+                    obj = lib.getAutor();
+                    break;
+                case 3:
+                    obj = lib.getEditorial();
+                    break;
+                case 4:
+                    obj = lib.getAño();
+                    break;
+                case 5:
+                    obj = lib.getEdicion();
+                    break;
+                case 6:
+                    obj = lib.getIdioma();
+                    break;
+                default:
+                    obj = null;
+                    break;
+            }
+        }
+
+        return obj;
+    }
+    
+    @Override
+    public String getColumnName(int c){
+        String nombre = "";
+        switch(c){
+            case 0:
+                nombre = "ISBN";
+                break;
+            case 1:
+                nombre = "Titulo";
+                break;
+            case 2:
+                nombre = "Autor";
+                break;
+            case 3:
+                nombre = "Editorial";
+                break;
+            case 4:
+                nombre = "Año";
+                break;
+            case 5:
+                nombre = "Edición";
+                break;
+            case 6:
+                nombre = "Idioma";
+                break;
+            default:
+                nombre = "";
+                break;
+        }
+        return nombre;
+    }
+    
+}
 public final class UIlibrary extends javax.swing.JFrame {
     
     ListaCategorias lcategorias;
     DefaultMutableTreeNode categorias = new DefaultMutableTreeNode("Categorias");
-    DefaultTreeModel modelo = new DefaultTreeModel(categorias);
-    
+    DefaultTreeModel modelo_tree = new DefaultTreeModel(categorias);
+    TableModel modelo_tabla;
     /*
      *  Actualizar JTree
      */
     public void actualizarJTree(ListaCategorias lista){
-        jTree1.setModel(modelo);
+        jTree1.setModel(modelo_tree);
         DefaultMutableTreeNode cat;
+        jTree1.expandRow(lista.getContador());
         
         if(lista != null){
             NodoLC temp = lista.getInicio();
@@ -35,16 +130,25 @@ public final class UIlibrary extends javax.swing.JFrame {
                 //Agregar categoria a jTree
                 System.out.println(" -> "+temp.getCategoria());
                 cat = new DefaultMutableTreeNode(temp.getCategoria());
-                modelo.insertNodeInto(cat, categorias, 0);
+                modelo_tree.insertNodeInto(cat, categorias, 0);
                 temp = temp.getSiguiente();
             }
             System.out.println(" -> "+temp.getCategoria());
             cat = new DefaultMutableTreeNode(temp.getCategoria());
-            modelo.insertNodeInto(cat, categorias, 0);
+            modelo_tree.insertNodeInto(cat, categorias, 0);
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo obtener las categorias del Árbol AVL");
         }
-       
+    }
+    
+    /*
+     *  Actualizar JTable
+     */
+    public void actualizarJTable(ListaLibros lista){
+        
+        modelo_tabla = new ModeloTablaLibros(lista);
+        jTable1.setModel(modelo_tabla);
+        //modelo_tabla.setValueAt("Hola", 1, 1);
     }
     /**
      * Creates new form UIlibrary
@@ -199,6 +303,7 @@ public final class UIlibrary extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Biblioteca");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.setInheritsPopupMenu(true);
         jTree1.setMaximumSize(new java.awt.Dimension(65, 16));
         jTree1.setMinimumSize(new java.awt.Dimension(30, 0));
         jTree1.setPreferredSize(new java.awt.Dimension(65, 16));
@@ -305,6 +410,7 @@ public final class UIlibrary extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -332,12 +438,21 @@ public final class UIlibrary extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // BOTON AGREGAR LIBRO
+        UIlibroregistro registro = new UIlibroregistro();
+        registro.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
         // METODO QUE OBTIENE LA CATEGORIA A MOSTRAR EN LA TABLA
         DefaultMutableTreeNode categoria = (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
-        JOptionPane.showMessageDialog(this, categoria.getPath());
+        try {
+            NodoCategoria tempCat = USAC_LIBRARY.biblioteca.buscar(categoria.getPath()[1].toString());
+            ListaLibros listaLib = tempCat.getListaLibros();
+            actualizarJTable(listaLib);
+            //JOptionPane.showMessageDialog(this, categoria.getPath()[1].toString());
+        } catch (Exception e) {
+        }
+        
     }//GEN-LAST:event_jTree1ValueChanged
 
     /**
