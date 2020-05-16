@@ -15,28 +15,29 @@ public class Archivo {
         String json = "";
         File archivo = null;
         FileReader fr = null;
+        FileInputStream is = null;
+        InputStreamReader sr = null;
         BufferedReader br = null;
 
         try {
             archivo = new File (ruta);
-            fr = new FileReader (archivo);
-            br = new BufferedReader(fr);
+            is = new FileInputStream(archivo);
+            sr = new InputStreamReader(is, "UTF-8");
+            br = new BufferedReader(sr, 8);
 
             // Lectura del fichero
             String linea;
             while((linea=br.readLine())!=null)
                json += linea;
         }
-        catch(Exception e){
-            e.printStackTrace();
+        catch(IOException e){
         }finally{
             // Cerrar el fichero
             try{                    
                 if( null != fr ){   
                    fr.close();     
                 }                  
-            }catch (Exception e2){ 
-                e2.printStackTrace();
+            }catch (IOException e2){ 
             }
         }
         

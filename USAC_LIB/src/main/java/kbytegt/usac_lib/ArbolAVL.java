@@ -374,7 +374,8 @@ public class ArbolAVL {
             //Crear categoria
             insertar(lib.getCategoria(),lib.getCarnet());
             //Insertar en categoria
-            buscar(lib.getCategoria()).insertarLibro(lib);
+            //buscar(lib.getCategoria()).insertarLibro(lib);
+            insertarLibro(lib);
         }
         
     }

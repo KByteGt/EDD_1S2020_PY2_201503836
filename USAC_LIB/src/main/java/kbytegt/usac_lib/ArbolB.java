@@ -48,7 +48,7 @@ public class ArbolB {
         return (this.raiz == null)? null : this.raiz.buscarISBN(k);
     }
     
-    public Libro[] buscarPorNombre(String nombre){
+    public ListaLibros buscarPorNombre(String nombre){
         return null;
     }
     

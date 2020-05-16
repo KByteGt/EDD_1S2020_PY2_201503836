@@ -119,10 +119,18 @@ public final class UIlibrary extends javax.swing.JFrame {
      *  Actualizar JTree
      */
     public void actualizarJTree(ListaCategorias lista){
+        
         jTree1.setModel(modelo_tree);
+        
+        //Limpiar JTree
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode)modelo_tree.getRoot();
+        root.removeAllChildren();
+        modelo_tree.reload(root);
+        
+        //Insertar en JTree
         DefaultMutableTreeNode cat;
         jTree1.expandRow(lista.getContador());
-        
+        System.out.println(" [JTre] contador: "+lista.getContador());
         if(lista != null){
             NodoLC temp = lista.getInicio();
         
@@ -136,6 +144,7 @@ public final class UIlibrary extends javax.swing.JFrame {
             System.out.println(" -> "+temp.getCategoria());
             cat = new DefaultMutableTreeNode(temp.getCategoria());
             modelo_tree.insertNodeInto(cat, categorias, 0);
+            modelo_tree.reload();
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo obtener las categorias del Árbol AVL");
         }
@@ -149,6 +158,13 @@ public final class UIlibrary extends javax.swing.JFrame {
         modelo_tabla = new ModeloTablaLibros(lista);
         jTable1.setModel(modelo_tabla);
         //modelo_tabla.setValueAt("Hola", 1, 1);
+    }
+    
+    /*
+     *  Actualizar JTable
+     */
+    public void setMenuCarnet(String carnet){
+        jMenu3.setText(carnet);
     }
     /**
      * Creates new form UIlibrary
@@ -175,10 +191,11 @@ public final class UIlibrary extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -202,9 +219,9 @@ public final class UIlibrary extends javax.swing.JFrame {
         setTitle("Biblioteca virtual");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("[ISBN] libro:");
+        jLabel1.setText("Buscar libro:");
 
-        jTextField1.setText("ISBN");
+        jTextField1.setText("ISBN / Titulo");
 
         jButton2.setText("Buscar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -219,12 +236,12 @@ public final class UIlibrary extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,6 +290,24 @@ public final class UIlibrary extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Biblioteca"));
 
+        jSplitPane1.setDividerLocation(115);
+        jSplitPane1.setDividerSize(8);
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Biblioteca");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.setInheritsPopupMenu(true);
+        jTree1.setMaximumSize(new java.awt.Dimension(65, 16));
+        jTree1.setMinimumSize(new java.awt.Dimension(30, 0));
+        jTree1.setPreferredSize(new java.awt.Dimension(65, 16));
+        jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTree1ValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTree1);
+
+        jSplitPane1.setLeftComponent(jScrollPane2);
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -299,48 +334,47 @@ public final class UIlibrary extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Biblioteca");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jTree1.setInheritsPopupMenu(true);
-        jTree1.setMaximumSize(new java.awt.Dimension(65, 16));
-        jTree1.setMinimumSize(new java.awt.Dimension(30, 0));
-        jTree1.setPreferredSize(new java.awt.Dimension(65, 16));
-        jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                jTree1ValueChanged(evt);
+        jTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        jTable1.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTree1);
+        jScrollPane1.setViewportView(jTable1);
+
+        jSplitPane1.setRightComponent(jScrollPane1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane1)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu3.setText("Usuario");
 
-        jMenuItem1.setText("Editar");
+        jMenuItem1.setText("Editar usuario");
         jMenu3.add(jMenuItem1);
         jMenu3.add(jSeparator1);
 
         jMenuItem2.setText("Salir");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
@@ -431,7 +465,13 @@ public final class UIlibrary extends javax.swing.JFrame {
             System.out.println(jFileChooser1.getSelectedFile().getAbsolutePath());
             txt = a.getJson(jFileChooser1.getSelectedFile().getAbsolutePath());
            
-            USAC_LIBRARY.ingresarLibros(txt);
+            boolean flag = USAC_LIBRARY.ingresarLibros(txt);
+             if(flag){
+                 
+                JOptionPane.showMessageDialog(this,"Carga de libros exitosa","JSON", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,"No se pudieron cargar los libros","JSON", JOptionPane.ERROR_MESSAGE);
+            }
             //System.out.println(txt);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -454,6 +494,29 @@ public final class UIlibrary extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jTree1ValueChanged
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // METODO DE SALIR
+        USAC_LIBRARY.LogOut();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // OBTENER LIBRO DE TABLA
+//        DefaultTableModel moelo = (DefaultTableModel) jTable1.getModel();
+//        if(evt.getClickCount() == 1){
+//            for (int i = 0; i < jTable1.getRowCount(); i++) {
+//                
+//            }
+//        }
+        //Obtener ISBN de la tabla al hacer doble click
+        if(evt.getClickCount() == 2){
+            int fila = jTable1.rowAtPoint(evt.getPoint());
+            if(fila > -1){
+                JOptionPane.showMessageDialog(this, String.valueOf(jTable1.getValueAt(fila, 0)));
+            }
+        }
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -519,6 +582,7 @@ public final class UIlibrary extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTree jTree1;

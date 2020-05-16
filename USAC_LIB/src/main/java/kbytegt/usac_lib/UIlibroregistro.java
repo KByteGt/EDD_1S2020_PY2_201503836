@@ -5,11 +5,12 @@
  */
 package kbytegt.usac_lib;
 
+import java.math.BigInteger;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author JOSED
+ * @author KByteGt
  */
 public class UIlibroregistro extends javax.swing.JFrame {
 
@@ -54,6 +55,8 @@ public class UIlibroregistro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Libro");
+        setMaximumSize(new java.awt.Dimension(262, 503));
+        setMinimumSize(new java.awt.Dimension(262, 503));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -280,6 +283,35 @@ public class UIlibroregistro extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // GUARDAR LIBRO
+        int anio = 0;
+        String titulo = "", autor = "", editorial = "", categoria = "", idioma = "",edicion = "";
+        BigInteger isbn = BigInteger.ZERO;
+        
+        try {
+            anio = Integer.parseInt(in_anio.getText());
+            //edicion = Integer.parseInt(in_edicion.getText());
+            edicion = in_edicion.getText();
+            isbn = new BigInteger(in_isbn.getText());
+            
+            titulo = in_titulo.getText();
+            autor = in_autor.getText();
+            editorial = in_editorial.getText();
+            categoria = in_categoria.getText();
+            idioma = in_idioma.getText();
+            
+            Libro libro = new Libro(isbn,titulo,autor,editorial,anio,edicion,categoria,idioma,USAC_LIBRARY.carnetLogin);
+            
+            if(USAC_LIBRARY.registrarLibro(libro)){
+                JOptionPane.showMessageDialog(this, "Libro creado con éxito ","Registro Libro",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo crear el libro ","Registro Libro",JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(),"Registro Libro",JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

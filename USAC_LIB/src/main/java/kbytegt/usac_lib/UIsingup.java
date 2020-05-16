@@ -5,6 +5,7 @@
  */
 package kbytegt.usac_lib;
 
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /**
@@ -241,10 +242,12 @@ public class UIsingup extends javax.swing.JFrame {
                     in_carrera.setText("");
                     in_password.setText("");
                 }
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(),"Sing In",JOptionPane.ERROR_MESSAGE);
                 System.out.println(" **Error al obtener MD5");
             }
-        } catch (Exception e) {
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(),"Sing In",JOptionPane.ERROR_MESSAGE);
             JOptionPane.showMessageDialog(this, "Carnet invalido");
             carnet = 0;
         }

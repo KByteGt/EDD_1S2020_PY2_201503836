@@ -19,6 +19,13 @@ public class UIlogin extends javax.swing.JFrame {
     
     Security security;
     /**
+     * Limpiar Formulario
+     */
+    public void limpiar(){
+        usuario.setText("");
+        password.setText("");
+    }
+    /**
      * Creates new form UIlogin
      */
     public UIlogin() {
