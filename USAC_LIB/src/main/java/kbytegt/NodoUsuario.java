@@ -1,4 +1,4 @@
-package kbytegt.usac_lib;
+package kbytegt;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

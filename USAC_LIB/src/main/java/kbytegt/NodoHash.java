@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NOT_FOUND;
+import static kbytegt.usac_lib.REQUEST_NOT_FOUND;
 
 /**
  *

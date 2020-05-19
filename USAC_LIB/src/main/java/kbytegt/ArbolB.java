@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
 import java.math.BigInteger;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_ERROR;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NO_CONTENT;
+import static kbytegt.usac_lib.REQUEST_ERROR;
+import static kbytegt.usac_lib.REQUEST_NO_CONTENT;
 
 /**
  *
@@ -48,8 +48,10 @@ public class ArbolB {
         return (this.raiz == null)? null : this.raiz.buscarISBN(k);
     }
     
-    public ListaLibros buscarPorNombre(String nombre){
-        return null;
+    public void buscarPorNombre(ListaLibros lista, String nombre){
+        if(this.raiz != null){
+            this.raiz.buscarPorNombre(lista, nombre);
+        }
     }
     
     public void insertar(Libro libro){

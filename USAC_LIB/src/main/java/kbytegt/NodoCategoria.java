@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
 import java.math.BigInteger;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_ERROR;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NO_CONTENT;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
+import static kbytegt.usac_lib.REQUEST_DELETED;
+import static kbytegt.usac_lib.REQUEST_ERROR;
+import static kbytegt.usac_lib.REQUEST_NO_CONTENT;
+import static kbytegt.usac_lib.REQUEST_OK;
 /**
  *
  * @author KByteGt
@@ -94,7 +95,7 @@ public class NodoCategoria {
         this.altura = altura;
     }
     
-    public void eliminarLibro(BigInteger isbn){
+    public int eliminarLibro(BigInteger isbn){
         int r = this.libros.eliminar(isbn);
         switch(r){
             case REQUEST_ERROR:
@@ -103,7 +104,7 @@ public class NodoCategoria {
             case REQUEST_NO_CONTENT:
                 System.out.println("No se encontro el libro: "+isbn);
                 break;
-            case REQUEST_OK:
+            case REQUEST_DELETED:
                 System.out.println("Libro ["+isbn+"] eliminado con exito.");
                 this.total--;
                 break;
@@ -111,6 +112,7 @@ public class NodoCategoria {
                 System.out.println("Codigo: "+r);
                 break;
         }
+        return r;
     }
     
     
@@ -120,16 +122,27 @@ public class NodoCategoria {
         this.total++;
     }
     
-    public String getGraphvizNodo(){
+    public String getGraphvizArbol(){
         String g = "";
+        
+        g += "n"+nombre+" [label = \""+nombre+"\\nLibros: "+libros.contar()+"\"];\n";
+        
+        if(izquierda != null){
+            g += izquierda.getGraphvizArbol() + "n"+nombre+" -> n"+izquierda.getNombre()+";\n";
+        } 
+        
+        if(derecha != null){
+            g += derecha.getGraphvizArbol() + "n"+nombre+" -> n"+derecha.getNombre()+";\n";
+        }
         
         return g;
     }
     
-    public String getGraphvizRuta(){
-        String g = "";
-        
-        return g;
+    public String getGraphvizNodo(){
+        return "n"+nombre+" [label = \""+nombre+"\"];\n";
+    }
+    public String getGraphvizRecorrido(){
+        return " -> n"+nombre;
     }
     
     public void recorrer(){
@@ -142,5 +155,12 @@ public class NodoCategoria {
     
     public Libro buscarISBN(BigInteger i){
         return this.libros.buscarISBN(i);
+    }
+    
+    public void llenarListaLibrosBuscar(ListaLibros lista, String nombre){
+        this.libros.buscarPorNombre(lista, nombre);
+    }
+    public String getGraphvizB(){
+        return this.libros.getGraphviz(this.nombre);
     }
 }

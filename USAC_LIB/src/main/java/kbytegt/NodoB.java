@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
 import java.math.BigInteger;
 import java.util.HashSet;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_ERROR;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_NO_CONTENT;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
+import static kbytegt.usac_lib.REQUEST_DELETED;
+import static kbytegt.usac_lib.REQUEST_ERROR;
+import static kbytegt.usac_lib.REQUEST_NO_CONTENT;
+import static kbytegt.usac_lib.REQUEST_OK;
 
 /**
  *
@@ -136,8 +137,19 @@ public class NodoB {
         
     }
     
-    public Libro[] buscarPorNombre(String nombre){
-        return null;
+    public void buscarPorNombre(ListaLibros lista,String nombre){
+        try {
+            int i = 0;
+            while(i < n){
+                if(keys[i].getTitulo().contains(nombre)){
+                    lista.insertar(keys[i]);
+                    //lista.insertar(new Libro(keys[i].getISBN(),keys[i].getTitulo(),keys[i].getAutor(),keys[i].getEditorial(),keys[i].getAño(),keys[i].getEdicion(),keys[i].getCategoria(),keys[i].getIdioma(),keys[i].getCarnet()));
+                }
+                i++;
+            }
+        } catch (Exception e) {
+        }
+    
     }
     
     //Métodos para insertar
@@ -229,7 +241,7 @@ public class NodoB {
             } else {
                 eliminarDeNoHoja(id);
             }
-            return REQUEST_OK;
+            return REQUEST_DELETED;
         } else {
             //El id no esta en el nodo
             //Si no es un nodo hoja

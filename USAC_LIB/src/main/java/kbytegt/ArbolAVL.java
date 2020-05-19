@@ -3,7 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
+
+import java.math.BigInteger;
+import static kbytegt.usac_lib.REQUEST_DELETED;
+import static kbytegt.usac_lib.REQUEST_ERROR;
+import static kbytegt.usac_lib.REQUEST_NOT_FOUND;
+import static kbytegt.usac_lib.REQUEST_UNAUTHORIZED;
 
 /**
  *
@@ -158,11 +164,15 @@ public class ArbolAVL {
         
         return actual;
     }
-    public NodoCategoria eliminar(String nombre, int usuario){
+    public int eliminar(String nombre, int usuario){
         if(this.raiz != null){
-            return eliminar(this.raiz,nombre,usuario);
+            if(eliminar(this.raiz,nombre,usuario) != null){
+                return REQUEST_DELETED;
+            } else{
+                return REQUEST_UNAUTHORIZED;
+            }
         } else {
-            return null;
+            return REQUEST_ERROR;
         }
     }
     private NodoCategoria eliminar(NodoCategoria raiz, String nombre, int usuario){
@@ -347,6 +357,23 @@ public class ArbolAVL {
         }
     }
     
+    //Obtener lista de coincidencias
+    public void buscarNombreLibro(ListaLibros lista,String nombre){
+        if(raiz != null){
+            this.lista.vaciar();
+            llenarListaBuscar(raiz,lista, nombre);
+            
+        } 
+    }
+    
+    private void llenarListaBuscar(NodoCategoria nodo,ListaLibros lista, String nombre){
+        if(nodo != null){
+            llenarListaBuscar(nodo.getIzquierda(), lista,nombre);
+            nodo.llenarListaLibrosBuscar(lista, nombre);
+            llenarListaBuscar(nodo.getDerecha(),lista,nombre);
+        }
+    }
+    
     public void insertarLibro(Libro lib){
         /*
          *  1- Verificar que exita la categoria
@@ -378,5 +405,89 @@ public class ArbolAVL {
             insertarLibro(lib);
         }
         
+    }
+    
+    public int eliminarLibro(BigInteger isbn, String nombre){
+        int respuesta = 0;
+        
+        NodoCategoria categoria = buscar(nombre);
+        if(categoria != null){
+            //Existe la categoria
+            respuesta = categoria.eliminarLibro(isbn);
+        } else {
+            respuesta = REQUEST_NOT_FOUND;
+        }
+        return respuesta;
+    }
+    
+    public String getGraphvizArbol(String nombre){
+        String g = "digraph G {\nnode [shape = oval ];\nlabel = \".: "+nombre+" :.\";\n";
+        if(raiz != null){
+            g += raiz.getGraphvizArbol();
+        }
+        
+        g += "}";
+        return g;
+    }
+    
+    public String getGraphvizArbolB(String categoria){
+        NodoCategoria temp = this.buscar(categoria);
+        
+        if(temp != null){
+            return temp.getGraphvizB();
+        } else {
+            return "";
+        }
+    }
+    
+    public String getGraphvizOrdenado(String orden){
+        String g = "digraph G {\nnode [shape = oval ];\nlabel = \".: Árbol recorrido "+orden+" :.\";\n";
+        if(raiz != null){
+            g += "nInicio [label = \""+orden+"\"];\n";
+            g += getGraphvizOrdenadoN(this.raiz,"");
+            
+            g += "nInicio";
+            g += getGraphvizOrdenadoR(this.raiz, orden, "");
+            g += ";\n";
+        }
+        
+        g += "}";
+        return g;
+    }
+    
+    private String getGraphvizOrdenadoN(NodoCategoria nodo, String g){
+
+        if(nodo != null){
+            g = getGraphvizOrdenadoN(nodo.getIzquierda(),g);
+            g += nodo.getGraphvizNodo();
+            System.out.println(nodo.getGraphvizNodo());
+            g = getGraphvizOrdenadoN(nodo.getDerecha(),g);
+        }
+        
+        return g;
+    }
+    private String getGraphvizOrdenadoR(NodoCategoria nodo, String orden, String g){
+        if(nodo != null){
+            if(orden.equals("PostOrden")){
+                //PostOrden
+                g = getGraphvizOrdenadoR(nodo.getIzquierda(),orden,g);
+                g = getGraphvizOrdenadoR(nodo.getDerecha(),orden,g);
+                g += nodo.getGraphvizRecorrido();
+                System.out.println(" |-> "+nodo.getNombre());
+            }else if(orden.equals("PreOrden")){
+                //PreOrden
+                g += nodo.getGraphvizRecorrido();
+                System.out.println(" |-> "+nodo.getNombre());
+                g = getGraphvizOrdenadoR(nodo.getIzquierda(),orden,g);
+                g = getGraphvizOrdenadoR(nodo.getDerecha(),orden,g);
+            }else {
+                //InOrden
+                g = getGraphvizOrdenadoR(nodo.getIzquierda(),orden,g);
+                g += nodo.getGraphvizRecorrido();
+                System.out.println(" |-> "+nodo.getNombre());
+                g = getGraphvizOrdenadoR(nodo.getDerecha(),orden,g);
+            }
+        }
+        return g;
     }
 }

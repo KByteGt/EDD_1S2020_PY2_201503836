@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
 import java.math.BigInteger;
 import javax.swing.JOptionPane;
@@ -55,7 +55,6 @@ public class UIlibroregistro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Libro");
-        setMaximumSize(new java.awt.Dimension(262, 503));
         setMinimumSize(new java.awt.Dimension(262, 503));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -299,9 +298,9 @@ public class UIlibroregistro extends javax.swing.JFrame {
             categoria = in_categoria.getText();
             idioma = in_idioma.getText();
             
-            Libro libro = new Libro(isbn,titulo,autor,editorial,anio,edicion,categoria,idioma,USAC_LIBRARY.carnetLogin);
+            Libro libro = new Libro(isbn,titulo,autor,editorial,anio,edicion,categoria,idioma,usac_lib.carnetLogin);
             
-            if(USAC_LIBRARY.registrarLibro(libro)){
+            if(usac_lib.registrarLibro(libro)){
                 JOptionPane.showMessageDialog(this, "Libro creado con éxito ","Registro Libro",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } else {

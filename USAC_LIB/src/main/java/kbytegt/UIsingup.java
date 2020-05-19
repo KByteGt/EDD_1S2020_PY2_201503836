@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -49,7 +49,6 @@ public class UIsingup extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sing Up");
-        setMaximumSize(new java.awt.Dimension(280, 436));
         setMinimumSize(new java.awt.Dimension(280, 436));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -231,7 +230,7 @@ public class UIsingup extends javax.swing.JFrame {
                 System.out.println(" MD5: "+password);
                 NodoUsuario usuario = new NodoUsuario(carnet,nombre,apellido,carrera,password);
                 
-                if(USAC_LIBRARY.registrarUsuario(usuario)){
+                if(usac_lib.registrarUsuario(usuario)){
                     JOptionPane.showMessageDialog(this, "Usuario "+carnet+" creado exitosamente","Sing In",JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 } else{

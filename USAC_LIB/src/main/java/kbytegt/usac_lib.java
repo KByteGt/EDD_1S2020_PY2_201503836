@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +21,7 @@ import java.math.BigInteger;
  *
  * @author KByteGt
  */
-public class USAC_LIBRARY {
+public class usac_lib {
     //RESPUESTA
     static final int REQUEST_OK = 200;
     static final int REQUEST_CREATED = 201;
@@ -63,19 +63,24 @@ public class USAC_LIBRARY {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         // TODO code application logic here
         //json = new GsonBuilder().serializeNulls().create();
-        usuarios = new TablaHash(45);
-        biblioteca = new ArbolAVL();
-        
-        System.out.println("Preparando pruebas");
-        test();
-        
-        //Cargar el LogIn
         try {
-            System.out.println("Abriendo ventana LogIn");
-            ui_login.setVisible(!isLogin);
+             usuarios = new TablaHash(45);
+            biblioteca = new ArbolAVL();
+
+            System.out.println("Preparando pruebas");
+            test();
+
+            //Cargar el LogIn
+            try {
+                System.out.println("Abriendo ventana LogIn");
+                ui_login.setVisible(!isLogin);
+            } catch (Exception e) {
+                System.out.println("Error al abrir la ventana UIlogin");
+            }
         } catch (Exception e) {
-            System.out.println("Error al abrir la ventana UIlogin");
+            JOptionPane.showMessageDialog(null, "Error:\n"+e.getMessage());
         }
+       
 //        
         
 
@@ -104,6 +109,19 @@ public class USAC_LIBRARY {
         ui_library.setVisible(isLogin);
         ui_login.limpiar();
         ui_login.setVisible(!isLogin);
+    }
+    
+    public static void reLogIn(){
+        //Inicio de sesión exitosa
+//        System.out.println("Usuario "+carnetLogin+" conectado...");
+//        isLogin = true;
+//        ui_login.setVisible(!isLogin);
+//        ui_library.setVisible(isLogin);
+        NodoUsuario temp = usuarios.buscar(carnetLogin);
+        ui_library.setMenuCarnet("["+Integer.toString(carnetLogin)+"] "+temp.getApellido()+" "+temp.getNombre());
+//        if(biblioteca.getRaiz() != null){
+//            ui_library.actualizarJTree(biblioteca.getListaCategorias());
+//        }
     }
     
     public static ListaCategorias getCategorias(){

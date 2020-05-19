@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -54,10 +54,8 @@ public class UIlogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LogIn");
         setLocation(new java.awt.Point(450, 50));
-        setMaximumSize(new java.awt.Dimension(300, 500));
         setMinimumSize(new java.awt.Dimension(300, 500));
         setName("f_login"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(300, 500));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Roboto Light", 1, 24)); // NOI18N
@@ -182,16 +180,16 @@ public class UIlogin extends javax.swing.JFrame {
                 System.out.println(" **Error al generar MD5");
                 md5 = "error al generar md5";
             }
-            NodoUsuario temp = USAC_LIBRARY.usuarios.buscar(carnet);
+            NodoUsuario temp = usac_lib.usuarios.buscar(carnet);
             if(temp != null){
                 if(temp.getPassword().equals(md5)){
                     //Enviar al usuario al menú principal
                     //JOptionPane.showMessageDialog(null, "Ingreso exitoso","LogIn",JOptionPane.PLAIN_MESSAGE);
-                    USAC_LIBRARY.carnetLogin = temp.getCarnet();
-                    USAC_LIBRARY.nombreLogin = temp.getNombre();
-                    USAC_LIBRARY.apellidoLogin = temp.getApellido();
-                    USAC_LIBRARY.carreraLogin = temp.getCarrera();
-                    USAC_LIBRARY.LogIn();
+                    usac_lib.carnetLogin = temp.getCarnet();
+                    usac_lib.nombreLogin = temp.getNombre();
+                    usac_lib.apellidoLogin = temp.getApellido();
+                    usac_lib.carreraLogin = temp.getCarrera();
+                    usac_lib.LogIn();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas","LogIn",JOptionPane.WARNING_MESSAGE);
                 }
@@ -224,7 +222,7 @@ public class UIlogin extends javax.swing.JFrame {
             System.out.println(jFileChooser1.getSelectedFile().getAbsolutePath());
             txt = a.getJson(jFileChooser1.getSelectedFile().getAbsolutePath());
            
-            boolean flag = USAC_LIBRARY.ingresarUsuarios(txt);
+            boolean flag = usac_lib.ingresarUsuarios(txt);
             if(flag){
                 JOptionPane.showMessageDialog(this,"Carga de usuarios exitosa","JSON", JOptionPane.INFORMATION_MESSAGE);
             } else {

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kbytegt.usac_lib;
+package kbytegt;
 
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_ERROR;
-import static kbytegt.usac_lib.USAC_LIBRARY.REQUEST_OK;
+import static kbytegt.usac_lib.REQUEST_ERROR;
+import static kbytegt.usac_lib.REQUEST_OK;
 
 /**
  *
@@ -41,7 +41,7 @@ public class TablaHash {
     //FUNCIONES TABLA HASH
     
     private int funcion(int carnet){
-        return carnet % this.size;
+        return (carnet % this.size);
     }
     
     private int iniciarTabla(){
@@ -66,7 +66,7 @@ public class TablaHash {
         //Obtener indice
         int i = funcion(usuario.getCarnet());
         
-        System.out.println(" -- Insertar usuario en la klave: "+i);
+        System.out.println(" -- Insertar usuario en la klave: "+i+" - "+usuario.getCarnet());
         int request = tabla[i].insertar(usuario);
         
         return request;
